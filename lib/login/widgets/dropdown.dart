@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mongodb;
-import '../databaseconnection.dart';
- //! Module for DropDown Menu to show all Institutes 
+import '../../databaseconnection.dart';
+//! Module for DropDown Menu to show all Institutes
 
 class DropDown extends StatefulWidget {
   const DropDown({Key? key}) : super(key: key);
@@ -11,20 +11,22 @@ class DropDown extends StatefulWidget {
 }
 
 class _DropDownState extends State<DropDown> {
-
   late String dropdownValue = "";
   List<String> dropdownItems = [];
+  Map<dynamic, String> institutemap = {};
 
- 
   @override
   void initState() {
-
     () async {
       //! Accessing the database and getting the institute names before building of widget starts
       await RepositoryProvider.of<DatabaseAuthRepository>(context).connect();
       setState(() {
-        dropdownItems =
+        institutemap =
             RepositoryProvider.of<DatabaseAuthRepository>(context).institutes;
+        dropdownItems = RepositoryProvider.of<DatabaseAuthRepository>(context)
+            .institutes
+            .values
+            .toList();
         dropdownValue = dropdownItems[0];
       });
     }();
@@ -49,9 +51,13 @@ class _DropDownState extends State<DropDown> {
               setState(() {
                 dropdownValue = newValue!;
                 RepositoryProvider.of<DatabaseAuthRepository>(context)
-                    .instituteName = dropdownValue;
-                print(RepositoryProvider.of<DatabaseAuthRepository>(context)
-                    .instituteName = dropdownValue);
+                    .presentInstitute
+                    .name = dropdownValue;
+                RepositoryProvider.of<DatabaseAuthRepository>(context)
+                        .presentInstitute
+                        .id =
+                    institutemap.keys.firstWhere(
+                        (element) => institutemap[element] == dropdownValue);
               });
             },
             items: dropdownItems.map<DropdownMenuItem<String>>((String value) {

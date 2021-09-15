@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../databaseconnection.dart';
 import 'bloc/login_bloc.dart';
-import 'dropdown.dart';
+import 'widgets/dropdown.dart';
 import 'nextpage.dart';
+import 'widgets/password_field.dart';
+import 'widgets/submitbutton.dart';
+import 'widgets/username_field.dart';
 //* LOGIN SCREEN
 final _formKey = GlobalKey<FormState>();
-class LoginView extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => LoginBloc(
-          authRepo: context.read<DatabaseAuthRepository>(),
+          authRepo: context.read<DatabaseAuthRepository>(),//Providing the database Repository to the login screen to get 
         ),
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
@@ -37,14 +40,14 @@ class LoginView extends StatelessWidget {
               
             }
           },
-          child: _loginForm(),
+          child: loginForm(),
         ),
       ),
     );
   }
 }
 //! LOGIN FORM WIDGET
-Widget _loginForm() {
+Widget loginForm() {
   return Form(
     key: _formKey,
     child: Padding(
@@ -61,63 +64,13 @@ Widget _loginForm() {
               ),
             ],
           ),
-          _usernamefield(),
-          _passwordfield(),
-          _submitButton()
+          usernamefield(),
+          passwordfield(),
+          submitButton(_formKey)
         ],
       ),
     ),
   );
 }
-//! USERNAME FIELD
-Widget _usernamefield() {
-  return BlocBuilder<LoginBloc, LoginState>(
-    builder: (context, state) {
-      return TextFormField(
-        obscureText: false,
-        decoration: InputDecoration(
-            icon: Icon(Icons.person), hintText: 'Enter Username'),
-        validator: (value) =>
-            state.isValidUsername ? null : "Length must be greater than 3",
-        onChanged: (value) => context.read<LoginBloc>().add(
-              UsernameChanged(username: value),
-            ),
-      );
-    },
-  );
-}
-//! PASSWORD FIELD
-Widget _passwordfield() {
-  return BlocBuilder<LoginBloc, LoginState>(
-    builder: (context, state) {
-      return TextFormField(
-          obscureText: true,
-          decoration: InputDecoration(
-              icon: Icon(Icons.security), hintText: 'Enter Password'),
-          validator: (value) =>
-              state.isValidPassword ? null : "Length must be greater than 6",
-          onChanged: (value) => context.read<LoginBloc>().add(
-                PasswordChanged(password: value),
-              ));
-    },
-  );
-}
-//! SUBMIT BUTTON
-Widget _submitButton() {
-  return BlocBuilder<LoginBloc, LoginState>(
-    builder: (context, state) {
-      return state.presentstatus is LoginSubmitting
-          ? CircularProgressIndicator()
-          : Padding(
-            padding: const EdgeInsets.only(top:20),
-            child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    context.read<LoginBloc>().add(LoginSubmitted());
-                  }
-                },
-                child: Text("Login")),
-          );
-    },
-  );
-}
+
+
