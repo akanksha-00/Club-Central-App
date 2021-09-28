@@ -6,14 +6,16 @@ import 'models/institute.dart';
 // * Class to maintain all Mongo Atlas Database options
 
 class DatabaseAuthRepository {
-  Map<dynamic, String> institutes = {}; //* Variable to store list of institutes
-  Institute presentInstitute =
-      new Institute(id: ObjectId(), name: ""); //* Present Institute of the logged in user
+  Map<ObjectId, String> institutes =
+      {}; //* Variable to store list of institutes
+  Institute presentInstitute = new Institute(
+      id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
 
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
+    print("Callled");
     database = await Db.create(
         "mongodb+srv://nitk:nitk@cluster0.p2ygg.mongodb.net/test?retryWrites=true&w=majority");
     await database.open();
@@ -30,9 +32,9 @@ class DatabaseAuthRepository {
     final coll = database.collection("globalschema");
     //* Searching for record in database with the selected institute name and username
     var correctrecord = await coll.findOne({
-      'instituteName': presentInstitute.id,
       "username": username,
     });
+    print(correctrecord);
 
     if (correctrecord == null) {
       throw Exception(
@@ -48,7 +50,13 @@ class DatabaseAuthRepository {
     } else if (await FlutterBcrypt.verify(
             password: password, hash: correctrecord['password']) ==
         true) {
-      return true; //* When Passwords Match and Login is Succesful
+      presentInstitute.id = correctrecord['instituteName'];
+      presentInstitute.name = institutes[presentInstitute.id] as String;
+      print(presentInstitute.name);
+      print("true");
+      return true;
+
+      //* When Passwords Match and Login is Succesful
     }
     throw Exception(
         "Login Failed.Try again later!"); //* Throw exceptionmessage to take care of other errors
