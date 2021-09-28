@@ -27,14 +27,21 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isConnected = true;
       });
-
-      print("Done");
     }();
     super.initState();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Login",
+          textAlign: TextAlign.left,
+        ),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+        ),
+      ),
       body: (_isConnected == false)
           ? Center(child: CircularProgressIndicator())
           : BlocProvider(
@@ -76,7 +83,12 @@ Widget loginForm() {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [usernamefield(), passwordfield(), submitButton(_formKey)],
+        children: [
+          Container(child: Image.asset("assets/icons/logo.png")),
+          usernamefield(),
+          passwordfield(),
+          submitButton(_formKey)
+        ],
       ),
     ),
   );
