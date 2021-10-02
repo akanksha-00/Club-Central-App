@@ -81,8 +81,9 @@ Widget loginForm() {
   return Form(
     key: _formKey,
     child: Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(40),
       child: SingleChildScrollView(
+        reverse: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
