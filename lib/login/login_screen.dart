@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           "Login",
@@ -80,14 +81,31 @@ Widget loginForm() {
   return Form(
     key: _formKey,
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(child: Image.asset("assets/icons/logo.png")),
-          usernamefield(),
-          passwordfield(),
-          submitButton(_formKey)
+          // SizedBox(
+          //   height: 20.0,
+          // ),
+          Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  usernamefield(),
+                  passwordfield(),
+                  submitButton(_formKey)
+                ],
+              ),
+            ),
+          )
         ],
       ),
     ),
