@@ -80,36 +80,35 @@ class _LoginScreenState extends State<LoginScreen> {
 Widget loginForm() {
   return Form(
     key: _formKey,
-    child: SingleChildScrollView(
+    child: Padding(
       padding: EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // SizedBox(
-          //   height: 40.0,
-          // ),
-          Container(child: Image.asset("assets/icons/logo.png")),
-          SizedBox(
-            height: 40.0,
-          ),
-          Card(
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(child: Image.asset("assets/icons/logo.png")),
+            SizedBox(
+              height: 40.0,
             ),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  usernamefield(),
-                  passwordfield(),
-                  submitButton(_formKey)
-                ],
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
               ),
-            ),
-          )
-        ],
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    usernamefield(),
+                    passwordfield(),
+                    submitButton(_formKey)
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );
