@@ -1,8 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:flutter/services.dart';
 
-import 'models/institute.dart';
+import '../models/institute.dart';
+import '../models/user.dart';
 // * Class to maintain all Mongo Atlas Database options
 
 class DatabaseAuthRepository {
@@ -12,6 +14,7 @@ class DatabaseAuthRepository {
       id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
+  late User loggedinUser;
 
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
@@ -27,7 +30,6 @@ class DatabaseAuthRepository {
   }
 
   //! FUNCTION TO VALIDATE THE LOGIN CREDENTIALS
-
   Future<bool> login(String username, String password) async {
     final coll = database.collection("globalschema");
     //* Searching for record in database with the selected institute name and username
@@ -35,7 +37,6 @@ class DatabaseAuthRepository {
       "username": username,
     });
     print(correctrecord);
-
     if (correctrecord == null) {
       throw Exception(
           "Username doesn't exist in database. Try again!"); //*No such record exists
@@ -52,10 +53,19 @@ class DatabaseAuthRepository {
         true) {
       presentInstitute.id = correctrecord['instituteName'];
       presentInstitute.name = institutes[presentInstitute.id] as String;
-      print(presentInstitute.name);
-      print("true");
+      loggedinUser = User(
+          id: correctrecord['_id'],
+          username: correctrecord['username'],
+          isAdmin: correctrecord['isAdmin'],
+          isSuperAdmin: correctrecord['isSuperAdmin'],
+          institute: presentInstitute);
+      final usercoll = database.collection("user");
+      var userrecord = await usercoll.findOne({
+        "username": loggedinUser.username,
+      });
+      print(userrecord!['name']);
+      loggedinUser.name = userrecord['name'];
       return true;
-
       //* When Passwords Match and Login is Succesful
     }
     throw Exception(

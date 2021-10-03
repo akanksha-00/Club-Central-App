@@ -33,6 +33,8 @@ dependencies:
   flutter_bloc: ^7.2.0
   mongo_dart: ^0.7.2
   flutter_bcrypt: ^1.0.7
+  simple_animations: ^4.0.0
+  supercharged: ^2.1.1
   
 
 dev_dependencies:
