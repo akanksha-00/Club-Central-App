@@ -12,7 +12,6 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
   Stream<PostsState> mapEventToState(PostsEvents event) async* {
     if (event is GetPostsEvent) {
       yield LoadingState();
-      
     }
     throw UnimplementedError();
   }
