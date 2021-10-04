@@ -22,11 +22,7 @@ class PostsCard extends StatelessWidget {
           );
         },
         title: Text(post.title),
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(post.imageLink),
-          radius: 20.0,
-          backgroundColor: Colors.transparent,
-        ),
+        leading: Icon(Icons.event),
       ),
     );
   }

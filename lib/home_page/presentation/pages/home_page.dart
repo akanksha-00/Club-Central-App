@@ -1,4 +1,5 @@
 import 'package:club_central/posts/presentation/pages/posts_homepage.dart';
+import 'package:club_central/posts/presentation/sample_posts.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,18 +7,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Home",
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            PostsHomePage(posts: []),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Posts",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Divider(color: Colors.black,),
+          PostsHomePage(posts: postsList),
+        ],
       ),
     );
   }
