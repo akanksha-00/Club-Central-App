@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/profile_bloc.dart';
 import 'screens/changepassword/changepasswordscreen.dart';
-import 'screens/editprofile/editprofilescreen.dart';
 
 class MyProfilePage extends StatefulWidget {
   static const String routeName = '/my-profile-screen';
@@ -19,13 +18,6 @@ class MyProfilePage extends StatefulWidget {
 
 class _MyProfilePageState extends State<MyProfilePage> {
   List<List> _options = [
-    [
-      'Edit Profile',
-      'Edit your details',
-      Icons.edit,
-      Colors.red[400],
-      EditProfileRequest()
-    ],
     [
       'Change Password',
       'Change Your Password',
@@ -58,15 +50,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
         body: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {
             final buttonclick = state.button;
-            if (buttonclick is EditProfileClick) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                            value: BlocProvider.of<ProfileBloc>(context),
-                            child: EditProfileScreen(),
-                          )));
-            } else if (buttonclick is ChangePasswordButtonClick) {
+            if (buttonclick is ChangePasswordButtonClick) {
               Navigator.push(
                 context,
                 MaterialPageRoute(

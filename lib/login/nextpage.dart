@@ -10,17 +10,19 @@ class NextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Posts"),
-      ),
-      floatingActionButton: IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, MyProfilePage.routeName);
-
-        },
-        icon: Icon(Icons.person),
-        color: Color(0xff2196f3),
+    return Hero(
+      tag:'try',
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Posts"),
+        ),
+        floatingActionButton: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, MyProfilePage.routeName);
+          },
+          icon: Icon(Icons.person),
+          color: Color(0xff2196f3),
+        ),
       ),
     );
   }

@@ -40,10 +40,10 @@ class DatabaseAuthRepository {
     if (correctrecord == null) {
       throw Exception(
           "Username doesn't exist in database. Try again!"); //*No such record exists
-    } else if (correctrecord['isAdmin'] || correctrecord['isSuperAdmin']) {
+    } else if (correctrecord['isSuperAdmin'] == true) {
       throw Exception(
-          "You are Admin/Super Admin of Your Institute.Login Using the Website ");
-    } //* Admin or SuperAdmin is trying to login using the mobil eapp
+          "You are Super Admin of Your Institute.Login Using the Website ");
+    } //* SuperAdmin is trying to login using the mobile app
     if (await FlutterBcrypt.verify(
             password: password, hash: correctrecord['password']) ==
         false) {
@@ -59,12 +59,18 @@ class DatabaseAuthRepository {
           isAdmin: correctrecord['isAdmin'],
           isSuperAdmin: correctrecord['isSuperAdmin'],
           institute: presentInstitute);
-      final usercoll = database.collection("user");
-      var userrecord = await usercoll.findOne({
-        "username": loggedinUser.username,
-      });
-      print(userrecord!['name']);
-      loggedinUser.name = userrecord['name'];
+      print(loggedinUser.isAdmin);
+      //! CHANGE LATER
+      // TODO:Instead of finding in user table, find in club table
+      if (loggedinUser.isAdmin == false) {
+        final usercoll = database.collection("user");
+        var userrecord = await usercoll.findOne({
+          "username": loggedinUser.username,
+        });
+        print(userrecord!['name']);
+        loggedinUser.name = userrecord['name'];
+      }
+
       return true;
       //* When Passwords Match and Login is Succesful
     }

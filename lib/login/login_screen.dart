@@ -1,3 +1,4 @@
+import 'package:club_central/add_a_post/clubadminscreen.dart';
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'nextpage.dart';
 import 'widgets/password_field.dart';
 import 'widgets/submitbutton.dart';
 import 'widgets/username_field.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 //* LOGIN SCREEN
 final _formKey = GlobalKey<FormState>();
@@ -44,7 +46,22 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       body: (_isConnected == false)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: SleekCircularSlider(
+                appearance: CircularSliderAppearance(
+                  spinnerMode: true,
+                  size: 55,
+                  customColors: CustomSliderColors(
+                    progressBarColors: [
+                      Colors.blue,
+                      Colors.blue.shade600,
+                      Colors.blue.shade200
+                    ],
+                    trackColor: Colors.white,
+                  ),
+                ),
+              ),
+            )
           : BlocProvider(
               create: (context) => LoginBloc(
                 authRepo: context.read<
@@ -55,11 +72,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   final formStatus = state.presentstatus;
                   if (formStatus is LoginSuccess) {
                     //* Pushing the Next page to the screen stack
+                    print("Here");
+                    print(RepositoryProvider.of<DatabaseAuthRepository>(context)
+                        .loggedinUser
+                        .isAdmin);
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => NextPage()),
-                    );
+                    if (RepositoryProvider.of<DatabaseAuthRepository>(context)
+                            .loggedinUser
+                            .isAdmin ==
+                        true) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ClubAdminScreen()),
+                      );
+                    } else if (RepositoryProvider.of<DatabaseAuthRepository>(
+                                context)
+                            .loggedinUser
+                            .isSuperAdmin ==
+                        false) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => NextPage()),
+                      );
+                    }
                   } else if (formStatus is LoginFailed) {
                     //* Showing snackbar when  login failed
 
@@ -69,7 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ));
                   }
                 },
-                child: loginForm(),
+                child: Hero(
+                  child: loginForm(),
+                  tag: "Loginscreen",
+                ),
               ),
             ),
     );

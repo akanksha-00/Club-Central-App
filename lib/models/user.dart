@@ -6,8 +6,8 @@ class User {
   ObjectId id;
   String username;
   String name = "";
-  bool isAdmin;
-  bool isSuperAdmin;
+  bool isAdmin=false;
+  bool isSuperAdmin=false;
   Institute institute;
   User(
       {required this.id,

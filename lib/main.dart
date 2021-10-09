@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'add_a_post/clubadminscreen.dart';
 import 'login/login_screen.dart';
 import 'login/nextpage.dart';
 import 'myprofile/myprofile_screen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         routes: {
           NextPage.routeName: (_) => NextPage(),
           MyProfilePage.routeName: (_) => MyProfilePage(),
+          ClubAdminScreen.routeName: (_) => ClubAdminScreen(),
         },
         title: 'Club Central',
         theme: ThemeData(
