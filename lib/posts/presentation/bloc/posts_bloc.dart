@@ -13,6 +13,5 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
     if (event is GetPostsEvent) {
       yield LoadingState();
     }
-    throw UnimplementedError();
   }
 }

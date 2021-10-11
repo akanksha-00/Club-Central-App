@@ -1,5 +1,4 @@
 import 'package:club_central/posts/models/post_model.dart';
-import 'package:club_central/posts/presentation/sample_posts.dart';
 import 'package:club_central/posts/presentation/widgets/posts_card.dart';
 import 'package:flutter/material.dart';
 
