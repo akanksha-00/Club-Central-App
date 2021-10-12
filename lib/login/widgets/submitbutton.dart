@@ -2,35 +2,42 @@
 import 'package:club_central/login/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 Widget submitButton(var formKey) {
   return BlocBuilder<LoginBloc, LoginState>(
     builder: (context, state) {
       return state.presentstatus is LoginSubmitting
-          ? SleekCircularSlider(
-              appearance: CircularSliderAppearance(
-                spinnerMode: true,
-                size: 30,
-                customColors: CustomSliderColors(
-                  progressBarColors: [
-                    Colors.blue,
-                    Colors.blue.shade600,
-                    Colors.blue.shade200
-                  ],
-                  trackColor: Colors.white,
-                ),
-              ),
+          ? SpinKitPulse(
+              color: Colors.blue,
+              size: 10,
             )
           : Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: ElevatedButton(
-                  onPressed: () {
+              child: AnimatedButton(
+                  height: 40,
+                  width: 100,
+                  text: 'Sign In',
+                  isReverse: true,
+                  selectedTextColor: Colors.black,
+                  transitionType: TransitionType.LEFT_TO_RIGHT,
+                  backgroundColor: Colors.blue,
+                  borderColor: Colors.white,
+                  borderRadius: 50,
+                  borderWidth: 2,
+                  onPress: () {
                     if (formKey.currentState!.validate()) {
                       context.read<LoginBloc>().add(LoginSubmitted());
                     }
-                  },
-                  child: Text("Login")),
+                  }),
+              // child: ElevatedButton(
+              //     onPressed: () {
+              //       if (formKey.currentState!.validate()) {
+              //         context.read<LoginBloc>().add(LoginSubmitted());
+              //       }
+              //     },
+              //     child: Text("Login"),),
             );
     },
   );

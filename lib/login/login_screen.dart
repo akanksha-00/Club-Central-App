@@ -10,6 +10,7 @@ import 'widgets/password_field.dart';
 import 'widgets/submitbutton.dart';
 import 'widgets/username_field.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //* LOGIN SCREEN
 final _formKey = GlobalKey<FormState>();
@@ -38,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(
-          "Login",
+          "Welcome to Club Central",
           textAlign: TextAlign.left,
         ),
         titleTextStyle: TextStyle(
@@ -47,19 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: (_isConnected == false)
           ? Center(
-              child: SleekCircularSlider(
-                appearance: CircularSliderAppearance(
-                  spinnerMode: true,
-                  size: 55,
-                  customColors: CustomSliderColors(
-                    progressBarColors: [
-                      Colors.blue,
-                      Colors.blue.shade600,
-                      Colors.blue.shade200
-                    ],
-                    trackColor: Colors.white,
-                  ),
-                ),
+              child: SpinKitSpinningLines(
+                color: Colors.blue,
+                lineWidth: 7,
               ),
             )
           : BlocProvider(
@@ -78,8 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         .isAdmin);
 
                     if (RepositoryProvider.of<DatabaseAuthRepository>(context)
-                            .loggedinUser
-                            .isAdmin ==
+                            .isClubAdmin ==
                         true) {
                       Navigator.pushReplacement(
                         context,
@@ -126,7 +116,12 @@ Widget loginForm() {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(child: Image.asset("assets/icons/logo.png")),
+            Container(
+              child: Image.asset(
+                "assets/icons/logo.png",
+                color: Colors.black,
+              ),
+            ),
             SizedBox(
               height: 40.0,
             ),
@@ -140,8 +135,21 @@ Widget loginForm() {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Align(
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                              color: Colors.blue[600],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              fontFamily: 'Product-Sans'),
+                        ),
+                        alignment: Alignment.topLeft),
+                    SizedBox(height: 20),
                     usernamefield(),
+                    SizedBox(height: 20),
                     passwordfield(),
+
                     submitButton(_formKey)
                   ],
                 ),

@@ -5,6 +5,7 @@ import 'login/nextpage.dart';
 import 'myprofile/myprofile_screen.dart';
 import 'repositories/session_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           errorColor: Colors.red,
         ),
         home: LoginScreen(),
+        builder: EasyLoading.init()
       ),
     );
   }

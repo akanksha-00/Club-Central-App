@@ -1,3 +1,4 @@
+import 'package:club_central/models/club.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:flutter_bcrypt/flutter_bcrypt.dart';
@@ -14,7 +15,14 @@ class DatabaseAuthRepository {
       id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
-  late User loggedinUser;
+  bool isClubAdmin = false;
+  User loggedinUser = User(
+      id: ObjectId(),
+      username: "",
+      isAdmin: false,
+      isSuperAdmin: false,
+      institute: Institute(id: ObjectId(), name: ""));
+  ClubUser clubuser = ClubUser(id: ObjectId(), name: "");
 
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
@@ -36,7 +44,9 @@ class DatabaseAuthRepository {
     var correctrecord = await coll.findOne({
       "username": username,
     });
+
     print(correctrecord);
+    isClubAdmin = correctrecord!['isAdmin'];
     if (correctrecord == null) {
       throw Exception(
           "Username doesn't exist in database. Try again!"); //*No such record exists
@@ -51,27 +61,36 @@ class DatabaseAuthRepository {
     } else if (await FlutterBcrypt.verify(
             password: password, hash: correctrecord['password']) ==
         true) {
-      presentInstitute.id = correctrecord['instituteName'];
-      presentInstitute.name = institutes[presentInstitute.id] as String;
-      loggedinUser = User(
-          id: correctrecord['_id'],
-          username: correctrecord['username'],
-          isAdmin: correctrecord['isAdmin'],
-          isSuperAdmin: correctrecord['isSuperAdmin'],
-          institute: presentInstitute);
-      print(loggedinUser.isAdmin);
       //! CHANGE LATER
       // TODO:Instead of finding in user table, find in club table
-      if (loggedinUser.isAdmin == false) {
+      if (correctrecord['isAdmin'] == false) {
+        presentInstitute.id = correctrecord['instituteName'];
+        presentInstitute.name = institutes[presentInstitute.id] as String;
+        loggedinUser = User(
+            id: correctrecord['_id'],
+            username: correctrecord['username'],
+            isAdmin: correctrecord['isAdmin'],
+            isSuperAdmin: correctrecord['isSuperAdmin'],
+            institute: presentInstitute);
+        print(loggedinUser.isAdmin);
         final usercoll = database.collection("user");
         var userrecord = await usercoll.findOne({
           "username": loggedinUser.username,
         });
         print(userrecord!['name']);
         loggedinUser.name = userrecord['name'];
+        return true;
+      } else {
+        final usercoll = database.collection("club");
+        var userrecord = await usercoll.findOne({
+          "username": username,
+        });
+        print(userrecord);
+        clubuser.id = userrecord!['_id'];
+        clubuser.name = userrecord['name'];
+        return true;
       }
 
-      return true;
       //* When Passwords Match and Login is Succesful
     }
     throw Exception(
