@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: RepositoryProvider(
         create: (context) =>
             DatabaseAuthRepository(), //Providing Database Repository All over the scope of the app
-        child: LoginScreen(),
+        child: CalendarPage(),
       ),
     );
   }
