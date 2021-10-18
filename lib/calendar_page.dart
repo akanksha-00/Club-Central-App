@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import '../databaseconnection.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -9,6 +10,16 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  void dbFetch() async {
+    await FetchCalendarEvents.connect();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dbFetch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

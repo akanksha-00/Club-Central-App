@@ -62,3 +62,19 @@ class DatabaseAuthRepository {
         "Login Failed.Try again later!"); //* Throw exceptionmessage to take care of other errors
   }
 }
+
+class FetchCalendarEvents {
+  static var database, userCollection;
+
+  static connect() async {
+    database = await Db.create(
+        "mongodb+srv://nitk:nitk@cluster0.p2ygg.mongodb.net/test?retryWrites=true&w=majority");
+    await database.open();
+    userCollection = database.collection("event");
+  }
+
+  static Future<List<Map<String, dynamic>>> getDocuments() async {
+    final users = await userCollection.find().toList();
+    return users;
+  }
+}
