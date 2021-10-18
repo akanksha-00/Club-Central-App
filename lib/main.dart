@@ -7,8 +7,10 @@ import 'repositories/session_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'restart_controller.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(new HotRestartController(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,19 +24,19 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        routes: {
-          NextPage.routeName: (_) => NextPage(),
-          MyProfilePage.routeName: (_) => MyProfilePage(),
-          ClubAdminScreen.routeName: (_) => ClubAdminScreen(),
-        },
-        title: 'Club Central',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          errorColor: Colors.red,
-        ),
-        home: LoginScreen(),
-        builder: EasyLoading.init()
-      ),
+          routes: {
+            LoginScreen.routeName: (_) => LoginScreen(),
+            NextPage.routeName: (_) => NextPage(),
+            MyProfilePage.routeName: (_) => MyProfilePage(),
+            ClubAdminScreen.routeName: (_) => ClubAdminScreen(),
+          },
+          title: 'Club Central',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            errorColor: Colors.red,
+          ),
+          home: LoginScreen(),
+          builder: EasyLoading.init()),
     );
   }
 }

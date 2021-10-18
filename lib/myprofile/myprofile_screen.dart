@@ -6,6 +6,7 @@ import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../restart_controller.dart';
 import 'bloc/profile_bloc.dart';
 import 'screens/changepassword/changepasswordscreen.dart';
 
@@ -60,9 +61,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 ),
               );
             } else if (buttonclick is LogoutButtonClick) {
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (Route<dynamic> route) => false);
+              HotRestartController.performHotRestart(context);
             }
           },
           child: SingleChildScrollView(

@@ -27,11 +27,11 @@ Widget passwordfield() {
             size: 18,
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 2),
+            borderSide: BorderSide(color: Colors.blueGrey[100] as Color, width: 2),
             borderRadius: BorderRadius.circular(10.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey, width: 1.5),
+            borderSide: BorderSide(color: Colors.blueGrey[100] as Color, width: 1.5),
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),

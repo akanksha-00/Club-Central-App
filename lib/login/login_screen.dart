@@ -16,6 +16,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 final _formKey = GlobalKey<FormState>();
 
 class LoginScreen extends StatefulWidget {
+  static final routeName='/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -38,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           "Welcome to Club Central",
           textAlign: TextAlign.left,
@@ -149,7 +151,6 @@ Widget loginForm() {
                     usernamefield(),
                     SizedBox(height: 20),
                     passwordfield(),
-
                     submitButton(_formKey)
                   ],
                 ),

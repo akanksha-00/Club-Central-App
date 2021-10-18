@@ -2,6 +2,7 @@ import 'package:club_central/add_a_post/addpost_screen.dart';
 import 'package:club_central/add_a_post/bloc/addpost_bloc.dart';
 import 'package:club_central/login/login_screen.dart';
 import 'package:club_central/login/nextpage.dart';
+import 'package:club_central/my_posts/mypost_screen.dart';
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,14 +14,14 @@ class ClubAdminScreen extends StatelessWidget {
       PersistentTabController(initialIndex: 0);
   // TODO: Add posts screen
   List<Widget> _buildScreens() {
-    return [NextPage(), AddPost()];
+    return [MyPostsScreen(), AddPost()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
-        title: ("View Posts"),
+        title: ("My Posts"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
@@ -45,7 +46,7 @@ class ClubAdminScreen extends StatelessWidget {
         items: _navBarsItems(),
         confineInSafeArea: true,
         backgroundColor: Colors.white, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
+        handleAndroidBackButtonPress: false, // Default is true.
         resizeToAvoidBottomInset:
             true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
         stateManagement: true, // Default is true.
