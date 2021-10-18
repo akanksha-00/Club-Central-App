@@ -10,16 +10,6 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  void dbFetch() async {
-    await FetchCalendarEvents.connect();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    dbFetch();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
