@@ -64,17 +64,30 @@ class DatabaseAuthRepository {
 }
 
 class FetchCalendarEvents {
-  static var database, userCollection;
+  static var database, eventCollection;
+  static List<Map<String, dynamic>> evt = [];
 
   static connect() async {
     database = await Db.create(
         "mongodb+srv://nitk:nitk@cluster0.p2ygg.mongodb.net/test?retryWrites=true&w=majority");
     await database.open();
-    userCollection = database.collection("event");
+    eventCollection = database.collection("event");
+    final events = await eventCollection.find().toList();
+    for (var e in events) {
+      //  institutes[ins['_id']] = ins['name'];
+      Map<String, dynamic> temp = {};
+      temp['year'] = e['year'];
+      temp['month'] = e['month'];
+      temp['day'] = e['day'];
+      temp['hour'] = e['hour'];
+      temp['duration'] = e['duration(hrs)'];
+      temp['name'] = e['name'];
+      evt.add(temp);
+      // evt[e['_id']] = e['_id'];
+    }
   }
 
-  static Future<List<Map<String, dynamic>>> getDocuments() async {
-    final users = await userCollection.find().toList();
-    return users;
+  static List<Map<String, dynamic>> getDocuments() {
+    return evt;
   }
 }

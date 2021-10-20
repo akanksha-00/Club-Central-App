@@ -27,18 +27,21 @@ class _CalendarPageState extends State<CalendarPage> {
 }
 
 List<Appointment> getAppointments() {
+  final events = FetchCalendarEvents.getDocuments();
   List<Appointment> meetings = <Appointment>[];
-  final DateTime today = DateTime.now();
 
-  final DateTime startTime =
-      DateTime(today.year, today.month, today.day, 9, 0, 0);
-  final DateTime endTime = startTime.add(const Duration(hours: 2));
+  for (var e in events) {
+    final DateTime startTime = DateTime(int.parse(e['year']),
+        int.parse(e['month']), int.parse(e['day']), int.parse(e['hour']), 0, 0);
+    final DateTime endTime =
+        startTime.add(Duration(hours: int.parse(e['duration'])));
 
-  meetings.add(Appointment(
-      startTime: startTime,
-      endTime: endTime,
-      subject: 'Testing',
-      color: Colors.blue));
+    meetings.add(Appointment(
+        startTime: startTime,
+        endTime: endTime,
+        subject: e['name'],
+        color: Colors.blue));
+  }
 
   return meetings;
 }

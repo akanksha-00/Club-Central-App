@@ -12,7 +12,6 @@ class CalendarLoad extends StatefulWidget {
 class _CalendarLoadState extends State<CalendarLoad> {
   void dbFetch() async {
     await FetchCalendarEvents.connect();
-    print('****************************');
     Navigator.pushReplacementNamed(context, '/calendar');
   }
 
