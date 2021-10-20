@@ -74,7 +74,6 @@ class FetchCalendarEvents {
     eventCollection = database.collection("event");
     final events = await eventCollection.find().toList();
     for (var e in events) {
-      //  institutes[ins['_id']] = ins['name'];
       Map<String, dynamic> temp = {};
       temp['year'] = e['year'];
       temp['month'] = e['month'];
@@ -83,7 +82,6 @@ class FetchCalendarEvents {
       temp['duration'] = e['duration(hrs)'];
       temp['name'] = e['name'];
       evt.add(temp);
-      // evt[e['_id']] = e['_id'];
     }
   }
 
