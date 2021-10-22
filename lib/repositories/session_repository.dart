@@ -15,6 +15,7 @@ class DatabaseAuthRepository {
       id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
+  List<Map<String, dynamic>> evt = [];
   bool isClubAdmin = false;
   User loggedinUser = User(
       id: ObjectId(),
@@ -34,6 +35,21 @@ class DatabaseAuthRepository {
     final institutemap = await coll.find().toList();
     for (var ins in institutemap) {
       institutes[ins['_id']] = ins['name'];
+    }
+  }
+
+  Future<void> fetchEvents() async {
+    final eventCollection = database.collection("event");
+    final events = await eventCollection.find().toList();
+    for (var e in events) {
+      Map<String, dynamic> temp = {};
+      temp['year'] = e['year'];
+      temp['month'] = e['month'];
+      temp['day'] = e['day'];
+      temp['hour'] = e['hour'];
+      temp['duration'] = e['duration(hrs)'];
+      temp['name'] = e['name'];
+      evt.add(temp);
     }
   }
 

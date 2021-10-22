@@ -256,7 +256,7 @@ Widget loginForm() {
                           fontFamily: 'Product-Sans'),
                     ),
                     alignment: Alignment.topLeft),
-                    SizedBox(height: 20),
+                SizedBox(height: 20),
                 usernamefield(),
                 SizedBox(height: 20),
                 passwordfield(),
