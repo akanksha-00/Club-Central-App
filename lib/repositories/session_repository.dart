@@ -42,14 +42,18 @@ class DatabaseAuthRepository {
     final eventCollection = database.collection("event");
     final events = await eventCollection.find().toList();
     for (var e in events) {
-      Map<String, dynamic> temp = {};
-      temp['year'] = e['year'];
-      temp['month'] = e['month'];
-      temp['day'] = e['day'];
-      temp['hour'] = e['hour'];
-      temp['duration'] = e['duration(hrs)'];
-      temp['name'] = e['name'];
-      evt.add(temp);
+      if (presentInstitute.id == e['InstituteID']) {
+        Map<String, dynamic> temp = {};
+        DateTime date = e['date'];
+        temp['year'] = date.year;
+        temp['month'] = date.month;
+        temp['day'] = date.day;
+        temp['hour'] = date.hour;
+        temp['minutes'] = date.minute;
+        temp['duration'] = e['duration(hrs)'];
+        temp['name'] = e['name'];
+        evt.add(temp);
+      }
     }
   }
 

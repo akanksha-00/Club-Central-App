@@ -17,13 +17,8 @@ class _CalendarPageState extends State<CalendarPage> {
     List<Appointment> meetings = <Appointment>[];
 
     for (var e in events) {
-      final DateTime startTime = DateTime(
-          int.parse(e['year']),
-          int.parse(e['month']),
-          int.parse(e['day']),
-          int.parse(e['hour']),
-          0,
-          0);
+      final DateTime startTime =
+          DateTime(e['year'], e['month'], e['day'], e['hour'], e['minutes'], 0);
       final DateTime endTime =
           startTime.add(Duration(hours: int.parse(e['duration'])));
 
