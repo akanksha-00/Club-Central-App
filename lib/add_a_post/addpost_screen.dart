@@ -91,7 +91,10 @@ class _AddPostState extends State<AddPost> {
                     pageTransitionAnimation: PageTransitionAnimation.slideRight,
                   );
                 } else if (state.status is UploadingPost) {
-                  EasyLoading.showProgress(0.3, status: 'Uploading Post.....',);
+                  EasyLoading.showProgress(
+                    0.3,
+                    status: 'Uploading Post.....',
+                  );
                 }
               },
               child: SingleChildScrollView(
@@ -278,10 +281,9 @@ class _AddPostState extends State<AddPost> {
                                       // Pick an image
                                       final XFile? image =
                                           await _picker.pickImage(
-                                              source: ImageSource.gallery,
-                                              imageQuality: 90,
-                                              maxHeight: 100,
-                                              maxWidth: 100);
+                                        source: ImageSource.gallery,
+                                        imageQuality: 90,
+                                      );
                                       print("Compressed");
                                       print(image!.path);
                                       final bytes =
