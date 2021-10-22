@@ -36,6 +36,9 @@ class DatabaseAuthRepository {
     for (var ins in institutemap) {
       institutes[ins['_id']] = ins['name'];
     }
+  }
+
+  Future<void> fetchEvents() async {
     final eventCollection = database.collection("event");
     final events = await eventCollection.find().toList();
     for (var e in events) {

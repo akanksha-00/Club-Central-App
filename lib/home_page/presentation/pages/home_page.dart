@@ -84,11 +84,6 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 14.0,
           ),
-          IconButton(
-              icon: const Icon(Icons.edit_location),
-              onPressed: () {
-                Navigator.pushNamed(context, '/calendar');
-              }),
         ],
       ),
     );

@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
             NextPage.routeName: (_) => NextPage(),
             MyProfilePage.routeName: (_) => MyProfilePage(),
             ClubAdminScreen.routeName: (_) => ClubAdminScreen(),
-            '/calendar': (context) => CalendarPage(),
           },
           title: 'Club Central',
           theme: ThemeData(
