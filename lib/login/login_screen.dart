@@ -58,7 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => NextPage()),
+                      MaterialPageRoute(
+                          builder: (materialcontext) => RepositoryProvider(
+                                create: (repocontext) => context.read<DatabaseAuthRepository>(),
+                                child: NextPage(),
+                              )),
                     );
                   } else if (formStatus is LoginFailed) {
                     //* Showing snackbar when  login failed

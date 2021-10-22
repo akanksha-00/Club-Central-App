@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc: ^7.2.0
   mongo_dart: ^0.7.2
   flutter_bcrypt: ^1.0.7
+  dio: ^4.0.0
   
 
 dev_dependencies:
