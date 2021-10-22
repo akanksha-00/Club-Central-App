@@ -1,13 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
+import 'dart:convert';
+import 'dart:typed_data';
 import 'bloc/addpost_bloc.dart';
 import 'clubadminscreen.dart';
 import 'models/newpost.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddPost extends StatefulWidget {
   @override
@@ -22,7 +27,10 @@ class _AddPostState extends State<AddPost> {
       date: DateTime.now(),
       imageUrl: "",
       clubid:
-          RepositoryProvider.of<DatabaseAuthRepository>(context).clubuser.id);
+          RepositoryProvider.of<DatabaseAuthRepository>(context).clubuser.id,
+      instituteId: RepositoryProvider.of<DatabaseAuthRepository>(context)
+          .presentInstitute
+          .id);
 
   DateTime _selectedDate = DateTime.now();
   void _presentDatePicker() {
@@ -43,6 +51,18 @@ class _AddPostState extends State<AddPost> {
       });
     });
     print('...');
+  }
+
+  String _displayImage = "";
+  buildShowDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 
   @override
@@ -70,7 +90,9 @@ class _AddPostState extends State<AddPost> {
                     withNavBar: false, // OPTIONAL VALUE. True by default.
                     pageTransitionAnimation: PageTransitionAnimation.slideRight,
                   );
-                } else if (state.status is UploadFailed) {}
+                } else if (state.status is UploadingPost) {
+                  EasyLoading.showProgress(0.3, status: 'Uploading Post.....',);
+                }
               },
               child: SingleChildScrollView(
                 child: Padding(
@@ -175,8 +197,7 @@ class _AddPostState extends State<AddPost> {
                       Container(
                         height: 70,
                         child: Row(
-                          
-                        mainAxisAlignment:MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Expanded(
                               child: Text(
@@ -211,11 +232,11 @@ class _AddPostState extends State<AddPost> {
                         ),
                       ),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            width: 100,
-                            height: 100,
+                            width: 130,
+                            height: 130,
                             margin: EdgeInsets.only(
                               top: 8,
                               right: 10,
@@ -229,61 +250,60 @@ class _AddPostState extends State<AddPost> {
                             ),
                             child: FittedBox(
                               child: newPost.imageUrl == ""
-                                  ? Text("Enter Image Link")
-                                  : Image.network(
-                                      newPost.imageUrl,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  ? Text("Image Preview")
+                                  : Image.memory(
+                                      Base64Decoder().convert(_displayImage)),
                             ),
                           ),
                           Container(
-                            width: 200,
                             child: Padding(
-                              padding: const EdgeInsets.all(25),
-                              child: Center(
-                                child: TextFormField(
-                                  onChanged: (value) {
-                                    newPost.imageUrl = value;
-                                    context
-                                        .read<AddpostBloc>()
-                                        .add(PostChanged(newPost: newPost));
-                                  },
-                                  validator: (value) => value!.length > 0
-                                      ? null
-                                      : "URl cannot be Empty",
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.all(0.0),
-                                    labelText: 'Image URL',
-                                    hintText: 'Enter URL Of Image',
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
+                                padding: const EdgeInsets.all(9),
+                                child: TextButton(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          'Choose Image',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Icon(Icons.image)
+                                      ],
                                     ),
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14.0,
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                      size: 18,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.grey, width: 2),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.black, width: 1.5),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                                    onPressed: () async {
+                                      final ImagePicker _picker = ImagePicker();
+                                      // Pick an image
+                                      final XFile? image =
+                                          await _picker.pickImage(
+                                              source: ImageSource.gallery,
+                                              imageQuality: 90,
+                                              maxHeight: 100,
+                                              maxWidth: 100);
+                                      print("Compressed");
+                                      print(image!.path);
+                                      final bytes =
+                                          File(image.path).readAsBytesSync();
+                                      String img64 = base64Encode(bytes);
+                                      newPost.imageUrl = img64;
+                                      if (_displayImage != newPost.imageUrl) {
+                                        setState(() {
+                                          _displayImage = newPost.imageUrl;
+                                        });
+                                      }
+                                      print(img64);
+
+                                      context
+                                          .read<AddpostBloc>()
+                                          .add(PostChanged(newPost: newPost));
+
+                                      // Capture a photo
+                                    },
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                    ))),
                           )
                         ],
                       ),

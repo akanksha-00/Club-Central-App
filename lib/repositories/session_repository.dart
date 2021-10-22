@@ -62,10 +62,13 @@ class DatabaseAuthRepository {
             password: password, hash: correctrecord['password']) ==
         true) {
       //! CHANGE LATER
+      presentInstitute = Institute(
+          id: correctrecord['instituteName'],
+          name: institutes[correctrecord['instituteName']] as String);
+
+      print("Ins id ${presentInstitute.id}");
       // TODO:Instead of finding in user table, find in club table
       if (correctrecord['isAdmin'] == false) {
-        presentInstitute.id = correctrecord['instituteName'];
-        presentInstitute.name = institutes[presentInstitute.id] as String;
         loggedinUser = User(
             id: correctrecord['_id'],
             username: correctrecord['username'],

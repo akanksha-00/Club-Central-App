@@ -1,4 +1,5 @@
 import 'package:club_central/add_a_post/clubadminscreen.dart';
+import 'package:club_central/login/widgets/login_background.dart';
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,14 +10,15 @@ import 'nextpage.dart';
 import 'widgets/password_field.dart';
 import 'widgets/submitbutton.dart';
 import 'widgets/username_field.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:concentric_transition/concentric_transition.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //* LOGIN SCREEN
 final _formKey = GlobalKey<FormState>();
 
 class LoginScreen extends StatefulWidget {
-  static final routeName='/login';
+  static final routeName = '/login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -38,16 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          "Welcome to Club Central",
-          textAlign: TextAlign.left,
-        ),
-        titleTextStyle: TextStyle(
-          color: Colors.white,
-        ),
-      ),
       body: (_isConnected == false)
           ? Center(
               child: SpinKitSpinningLines(
@@ -73,19 +65,146 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (RepositoryProvider.of<DatabaseAuthRepository>(context)
                             .isClubAdmin ==
                         true) {
+                      var text_greetings = [
+                        Text(
+                          "Greetings ${RepositoryProvider.of<DatabaseAuthRepository>(context).clubuser.name}!!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.white70,
+                                offset: Offset(5.0, 5.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          "Welcome to Club Central!!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.blue[300] as Color,
+                                  offset: Offset(5.0, 5.0),
+                                ),
+                              ]),
+                        )
+                      ];
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ClubAdminScreen()),
+                            builder: (context) => ConcentricPageView(
+                                  colors: <Color>[
+                                    Colors.blue,
+                                    Colors.white,
+                                  ],
+
+                                  onFinish: () => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ClubAdminScreen(),
+                                    ),
+                                  ),
+
+                                  itemCount: 2, // null = infinity
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (int index, double value) {
+                                    return Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: 170),
+                                              text_greetings[index]
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )),
                       );
                     } else if (RepositoryProvider.of<DatabaseAuthRepository>(
                                 context)
                             .loggedinUser
                             .isSuperAdmin ==
                         false) {
+                      var text_greetings = [
+                        Text(
+                          "Greetings\n ${RepositoryProvider.of<DatabaseAuthRepository>(context).loggedinUser.username}!!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.white70,
+                                offset: Offset(5.0, 5.0),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Text(
+                          "Welcome to Club Central!!",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.blue[300] as Color,
+                                  offset: Offset(5.0, 5.0),
+                                ),
+                              ]),
+                        )
+                      ];
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => NextPage()),
+                        MaterialPageRoute(
+                            builder: (context) => ConcentricPageView(
+                                  colors: <Color>[
+                                    Colors.blue,
+                                    Colors.white,
+                                  ],
+
+                                  onFinish: () => Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NextPage(),
+                                    ),
+                                  ),
+
+                                  itemCount: 2, // null = infinity
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (int index, double value) {
+                                    return Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: 170),
+                                              text_greetings[index]
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )),
                       );
                     }
                   } else if (formStatus is LoginFailed) {
@@ -97,9 +216,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ));
                   }
                 },
-                child: Hero(
-                  child: loginForm(),
-                  tag: "Loginscreen",
+                child: Container(
+                  child: LoginBackground(
+                    formwidget: loginForm(),
+                  ),
                 ),
               ),
             ),
@@ -109,54 +229,40 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //! LOGIN FORM WIDGET
 Widget loginForm() {
-  return Form(
-    key: _formKey,
-    child: Padding(
-      padding: const EdgeInsets.all(40),
-      child: SingleChildScrollView(
-        reverse: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: Image.asset(
-                "assets/icons/logo.png",
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
-            Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                        child: Text(
-                          "LOGIN",
-                          style: TextStyle(
-                              color: Colors.blue[600],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              fontFamily: 'Product-Sans'),
-                        ),
-                        alignment: Alignment.topLeft),
+  return Container(
+    height: 50,
+    child: Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(40),
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Align(
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'Product-Sans'),
+                    ),
+                    alignment: Alignment.topLeft),
                     SizedBox(height: 20),
-                    usernamefield(),
-                    SizedBox(height: 20),
-                    passwordfield(),
-                    submitButton(_formKey)
-                  ],
-                ),
-              ),
-            )
-          ],
+                usernamefield(),
+                SizedBox(height: 20),
+                passwordfield(),
+                submitButton(_formKey)
+              ],
+            ),
+          ),
         ),
       ),
     ),

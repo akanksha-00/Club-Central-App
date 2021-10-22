@@ -11,7 +11,7 @@ class NextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag:'try',
+      tag: 'try',
       child: Scaffold(
         appBar: AppBar(
           title: Text("Posts"),

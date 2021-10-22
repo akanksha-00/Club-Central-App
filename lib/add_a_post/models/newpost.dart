@@ -5,11 +5,13 @@ class NewPost {
   ObjectId clubid;
   String description;
   DateTime date;
+  ObjectId instituteId;
   String imageUrl;
   NewPost(
       {required this.title,
       required this.clubid,
       required this.description,
       required this.date,
+      required this.instituteId,
       required this.imageUrl});
 }

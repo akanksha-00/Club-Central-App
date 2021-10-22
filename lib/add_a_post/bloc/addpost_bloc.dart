@@ -16,6 +16,7 @@ class AddpostBloc extends Bloc<AddpostEvent, AddPostState> {
                   description: "",
                   date: DateTime.now(),
                   clubid: ObjectId(),
+                  instituteId:ObjectId(),
                   imageUrl: ""),
               status: InitialStatus()),
         );
@@ -34,7 +35,10 @@ class AddpostBloc extends Bloc<AddpostEvent, AddPostState> {
           'Description': state.newpost.description,
           'ClubId': state.newpost.clubid,
           'ImageLink': state.newpost.imageUrl,
-          'Comments': []
+          'Comments': [],
+          'InstituteId':state.newpost.instituteId,
+      
+
         });
         yield state.copyWith(state.newpost, UploadSuccessful());
       } catch (e) {
