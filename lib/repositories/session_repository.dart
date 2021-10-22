@@ -1,8 +1,11 @@
+import 'package:club_central/models/club.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:flutter/services.dart';
 
-import 'models/institute.dart';
+import '../models/institute.dart';
+import '../models/user.dart';
 // * Class to maintain all Mongo Atlas Database options
 
 class DatabaseAuthRepository {
@@ -12,6 +15,14 @@ class DatabaseAuthRepository {
       id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
+  bool isClubAdmin = false;
+  User loggedinUser = User(
+      id: ObjectId(),
+      username: "",
+      isAdmin: false,
+      isSuperAdmin: false,
+      institute: Institute(id: ObjectId(), name: ""));
+  ClubUser clubuser = ClubUser(id: ObjectId(), name: "");
 
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
@@ -27,22 +38,22 @@ class DatabaseAuthRepository {
   }
 
   //! FUNCTION TO VALIDATE THE LOGIN CREDENTIALS
-
   Future<bool> login(String username, String password) async {
     final coll = database.collection("globalschema");
     //* Searching for record in database with the selected institute name and username
     var correctrecord = await coll.findOne({
       "username": username,
     });
-    print(correctrecord);
 
+    print(correctrecord);
+    isClubAdmin = correctrecord!['isAdmin'];
     if (correctrecord == null) {
       throw Exception(
           "Username doesn't exist in database. Try again!"); //*No such record exists
-    } else if (correctrecord['isAdmin'] || correctrecord['isSuperAdmin']) {
+    } else if (correctrecord['isSuperAdmin'] == true) {
       throw Exception(
-          "You are Admin/Super Admin of Your Institute.Login Using the Website ");
-    } //* Admin or SuperAdmin is trying to login using the mobil eapp
+          "You are Super Admin of Your Institute.Login Using the Website ");
+    } //* SuperAdmin is trying to login using the mobile app
     if (await FlutterBcrypt.verify(
             password: password, hash: correctrecord['password']) ==
         false) {
@@ -50,11 +61,38 @@ class DatabaseAuthRepository {
     } else if (await FlutterBcrypt.verify(
             password: password, hash: correctrecord['password']) ==
         true) {
-      presentInstitute.id = correctrecord['instituteName'];
-      presentInstitute.name = institutes[presentInstitute.id] as String;
-      print(presentInstitute.name);
-      print("true");
-      return true;
+      //! CHANGE LATER
+      presentInstitute = Institute(
+          id: correctrecord['instituteName'],
+          name: institutes[correctrecord['instituteName']] as String);
+
+      print("Ins id ${presentInstitute.id}");
+      // TODO:Instead of finding in user table, find in club table
+      if (correctrecord['isAdmin'] == false) {
+        loggedinUser = User(
+            id: correctrecord['_id'],
+            username: correctrecord['username'],
+            isAdmin: correctrecord['isAdmin'],
+            isSuperAdmin: correctrecord['isSuperAdmin'],
+            institute: presentInstitute);
+        print(loggedinUser.isAdmin);
+        final usercoll = database.collection("user");
+        var userrecord = await usercoll.findOne({
+          "username": loggedinUser.username,
+        });
+        print(userrecord!['name']);
+        loggedinUser.name = userrecord['name'];
+        return true;
+      } else {
+        final usercoll = database.collection("club");
+        var userrecord = await usercoll.findOne({
+          "username": username,
+        });
+        print(userrecord);
+        clubuser.id = userrecord!['_id'];
+        clubuser.name = userrecord['name'];
+        return true;
+      }
 
       //* When Passwords Match and Login is Succesful
     }

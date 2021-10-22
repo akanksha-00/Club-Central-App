@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import '../../databaseconnection.dart';
+import '../../repositories/session_repository.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -27,9 +27,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         bool successful = await authRepo.login(state.username, state.password);
         if (successful == true) {
           yield state.copyWith(state: LoginSuccess());
+          
         } 
 
-        print("Login = {$successful}");
       } catch (e) {
         yield state.copyWith(state: LoginFailed(e.toString()));
         yield state.copyWith(state: LoginInitial());
