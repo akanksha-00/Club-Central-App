@@ -1,4 +1,3 @@
-
 import 'package:club_central/models/institute.dart';
 import 'package:club_central/posts/presentation/bloc/posts_bloc.dart';
 import 'package:club_central/posts/presentation/pages/posts_homepage.dart';
@@ -85,6 +84,11 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 14.0,
           ),
+          IconButton(
+              icon: const Icon(Icons.edit_location),
+              onPressed: () {
+                Navigator.pushNamed(context, '/calendar');
+              }),
         ],
       ),
     );
