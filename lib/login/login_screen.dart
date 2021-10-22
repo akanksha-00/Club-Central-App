@@ -107,6 +107,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Colors.white,
                                   ],
 
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (materialcontext) => RepositoryProvider(
+                                create: (repocontext) => context.read<DatabaseAuthRepository>(),
+                                child: NextPage(),
+                              )),
+                    );
                                   onFinish: () => Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -207,6 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )),
                       );
                     }
+
                   } else if (formStatus is LoginFailed) {
                     //* Showing snackbar when  login failed
 
@@ -229,6 +238,38 @@ class _LoginScreenState extends State<LoginScreen> {
 
 //! LOGIN FORM WIDGET
 Widget loginForm() {
+  return Form(
+    key: _formKey,
+    child: Padding(
+      padding: const EdgeInsets.all(40),
+      child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(child: Image.asset("assets/icons/logo.png")),
+            SizedBox(
+              height: 40.0,
+            ),
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    usernamefield(),
+                    passwordfield(),
+                    submitButton(_formKey)
+                  ],
+                ),
+              ),
+            )
+          ],
+
   return Container(
     height: 50,
     child: Form(

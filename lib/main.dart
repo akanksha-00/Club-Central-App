@@ -5,6 +5,7 @@ import 'login/nextpage.dart';
 import 'myprofile/myprofile_screen.dart';
 import 'repositories/session_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'restart_controller.dart';
@@ -16,6 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
           ),
           home: LoginScreen(),
           builder: EasyLoading.init()),
+
     );
   }
 }

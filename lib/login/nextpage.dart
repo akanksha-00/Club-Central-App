@@ -1,7 +1,10 @@
+import 'package:club_central/home_page/presentation/pages/home_page.dart';
+import 'package:flutter/material.dart';
 import 'package:club_central/myprofile/myprofile_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 //! DUMMY PAGE TO GO TO INCASE LOGIN IS SUCCESSFUL
 class NextPage extends StatelessWidget {
@@ -10,20 +13,15 @@ class NextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: 'try',
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Posts"),
-        ),
-        floatingActionButton: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, MyProfilePage.routeName);
-          },
-          icon: Icon(Icons.person),
-          color: Color(0xff2196f3),
+    return Scaffold(
+      backgroundColor: Colors.blue[100],
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          "Home",
         ),
       ),
+      body: HomePage(),
     );
   }
 }
