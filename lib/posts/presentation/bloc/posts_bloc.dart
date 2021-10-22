@@ -27,6 +27,8 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
         print(e.toString());
         yield ErrorState();
       }
+    } else if (event is AddComment) {
+      print("Adding comment");
     }
   }
 }

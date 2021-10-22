@@ -15,11 +15,14 @@ class PostsRepository {
     rawPosts.forEach((post) {
       List<String> rawComments = List<String>.from(post["Comments"]);
       List<CommentsModel> comments = <CommentsModel>[];
-      rawComments.forEach((rawComment) {
-        CommentsModel c = CommentsModel();
-        c.getCommentFromRawComment(rawComment);
-        comments.add(c);
-      });
+      if (rawComments.length != 0) {
+        rawComments.forEach((rawComment) {
+          CommentsModel c = CommentsModel();
+          c.getCommentFromRawComment(rawComment);
+          comments.add(c);
+        });
+      }
+      print("custom comments created");
       postsList.add(PostModel(
         id: post['_id'],
         title: post['Title'],
@@ -34,4 +37,10 @@ class PostsRepository {
     print("custom posts");
     return postsList;
   }
+
+  // void addComment(CommentsModel comment, ObjectId postId) {
+  //   String rawComment = comment.convertToRawComment();
+  //   database.collection('posts').find()
+  // }
+  
 }
