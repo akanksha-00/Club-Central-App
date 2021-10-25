@@ -16,6 +16,26 @@ class _ApplicationStatusState extends State<ApplicationStatus> {
         roundNo: 1, status: "Rejected", clubName: "IEEE", sigName: "CompSoc"),
     ApplicationData(
         roundNo: 1, status: "Pending", clubName: "IET", sigName: "Cipher"),
+    ApplicationData(
+        roundNo: 1, status: "Accepted", clubName: "IE", sigName: "Code"),
+    ApplicationData(
+        roundNo: 2, status: "Pending", clubName: "ACM", sigName: "Saahitya"),
+    ApplicationData(
+        roundNo: 2, status: "Accepted", clubName: "IE", sigName: "InkHeart"),
+    ApplicationData(
+        roundNo: 3, status: "Rejected", clubName: "ISTE", sigName: "Clutch"),
+    ApplicationData(
+        roundNo: 2, status: "Accepted", clubName: "ISTE", sigName: "Crypt"),
+    ApplicationData(
+        roundNo: 3, status: "Pending", clubName: "ISTE", sigName: "Gadget"),
+    ApplicationData(
+        roundNo: 3, status: "Accepted", clubName: "IE", sigName: "Gadget"),
+    ApplicationData(
+        roundNo: 2, status: "Reject", clubName: "IE", sigName: "Garage"),
+    ApplicationData(
+        roundNo: 1, status: "Pending", clubName: "ISTE", sigName: "Chronicle"),
+    ApplicationData(
+        roundNo: 2, status: "Accepted", clubName: "IET", sigName: "Venture"),
   ];
 
   @override
@@ -34,9 +54,6 @@ class _ApplicationStatusState extends State<ApplicationStatus> {
                   onTap: () {},
                   title: Row(
                     children: <Widget>[
-                      Text(
-                        all_application[index].clubName,
-                      ),
                       all_application[index].status == 'Accepted'
                           ? IconButton(
                               icon: const Icon(Icons.check_circle),
@@ -53,7 +70,18 @@ class _ApplicationStatusState extends State<ApplicationStatus> {
                                   icon: const Icon(Icons.cached_rounded),
                                   color: Colors.indigo,
                                   onPressed: () {},
-                                )
+                                ),
+                      Text(
+                        all_application[index].clubName,
+                      ),
+                      Text(
+                        " - " + all_application[index].sigName,
+                      ),
+                      Text(
+                        " - Round " +
+                            all_application[index].roundNo.toString() +
+                            " ",
+                      ),
                     ],
                   )),
             );
