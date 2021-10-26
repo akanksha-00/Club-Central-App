@@ -30,29 +30,30 @@ class NextPage extends StatelessWidget {
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
-        title: ("Calender"),
+            PersistentBottomNavBarItem(
+        icon: Icon(Icons.group),
+        title: ("Recruitments"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
-        title: ("Active Recruitment"),
+        icon: Icon(Icons.calendar_today_outlined),
+        title: ("Calendar"),
+        activeColorPrimary: Colors.blue,
+        inactiveColorPrimary: Colors.grey,
+      ),
+
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.checklist_rtl),
+        title: ("Applications"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
-        title: ("Application Status"),
+        icon: Icon(Icons.person),
+        title: ("Profile"),
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.add),
-        title: ("My Profile"),
-        activeColorPrimary: Colors.blue,
-        inactiveColorPrimary: Colors.blue,
       ),
     ];
   }
@@ -93,7 +94,7 @@ class NextPage extends StatelessWidget {
           duration: Duration(milliseconds: 200),
         ),
         navBarStyle:
-            NavBarStyle.style9, // Choose the nav bar style with this property.
+            NavBarStyle.style1, // Choose the nav bar style with this property.
       ),
     );
   }
