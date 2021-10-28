@@ -68,13 +68,15 @@ class DatabaseAuthRepository {
     final applicationCollection = database.collection("applications");
     final all_applications = await applicationCollection.find().toList();
     for (var a in all_applications) {
-      Map<String, dynamic> status_data = a['status'];
-      ApplicationData temp = ApplicationData(
-          roundNo: status_data['round_no'],
-          status: status_data['status'],
-          clubName: clubnamemap[a['club_id']].toString(),
-          sigName: signamemap[a['sig_id']].toString());
-      student_application.add(temp);
+      if (a['username'] == loggedinUser.username) {
+        Map<String, dynamic> status_data = a['status'];
+        ApplicationData temp = ApplicationData(
+            roundNo: status_data['round_no'],
+            status: status_data['status'],
+            clubName: clubnamemap[a['club_id']].toString(),
+            sigName: signamemap[a['sig_id']].toString());
+        student_application.add(temp);
+      }
     }
   }
 

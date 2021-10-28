@@ -48,9 +48,14 @@ class _ApplicationStatusPageState extends State<ApplicationStatusPage> {
               itemCount: all_application.length,
               itemBuilder: (context, index) {
                 return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   child: ListTile(
                       onTap: () {},
                       title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           all_application[index].status == 2
                               ? IconButton(
@@ -75,10 +80,21 @@ class _ApplicationStatusPageState extends State<ApplicationStatusPage> {
                           Text(
                             " - " + all_application[index].sigName,
                           ),
-                          Text(
-                            " - Round " +
-                                all_application[index].roundNo.toString() +
-                                " ",
+                          Container(
+                            child: MaterialButton(
+                              onPressed: () {},
+                              color: Colors.red[400],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Text(
+                                "Round " +
+                                    all_application[index].roundNo.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       )),
