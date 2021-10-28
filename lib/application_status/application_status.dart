@@ -1,14 +1,14 @@
 import 'package:club_central/application_status/application_data.dart';
 import 'package:flutter/material.dart';
 
-class ApplicationStatus extends StatefulWidget {
-  const ApplicationStatus({Key? key}) : super(key: key);
+class ApplicationStatusPage extends StatefulWidget {
+  const ApplicationStatusPage({Key? key}) : super(key: key);
 
   @override
-  _ApplicationStatusState createState() => _ApplicationStatusState();
+  _ApplicationStatusPageState createState() => _ApplicationStatusPageState();
 }
 
-class _ApplicationStatusState extends State<ApplicationStatus> {
+class _ApplicationStatusPageState extends State<ApplicationStatusPage> {
   List<ApplicationData> all_application = [
     ApplicationData(
         roundNo: 1, status: "Accepted", clubName: "ACM", sigName: "Sanganitra"),

@@ -1,7 +1,9 @@
 import 'package:club_central/add_a_post/addpost_screen.dart';
 import 'package:club_central/add_a_post/bloc/addpost_bloc.dart';
+import 'package:club_central/application_status/application_status.dart';
+import 'package:club_central/calendar/calendar_page.dart';
 import 'package:club_central/dummmy/active_recr.dart';
-import 'package:club_central/dummmy/application_status.dart';
+
 import 'package:club_central/dummmy/calender.dart';
 import 'package:club_central/home_page/presentation/pages/home_page.dart';
 import 'package:club_central/login/login_screen.dart';
@@ -19,7 +21,13 @@ class NextPage extends StatelessWidget {
       PersistentTabController(initialIndex: 0);
   // TODO: Add posts screen
   List<Widget> _buildScreens() {
-    return [HomePage(), CalenderPage1(), ActiveRecruitmentPage(), ApplicationStatusPage(),  MyProfilePage(),];
+    return [
+      HomePage(),
+      ActiveRecruitmentPage(),
+      CalendarPage(),
+      ApplicationStatusPage(),
+      MyProfilePage(),
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -30,7 +38,7 @@ class NextPage extends StatelessWidget {
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
-            PersistentBottomNavBarItem(
+      PersistentBottomNavBarItem(
         icon: Icon(Icons.group),
         title: ("Recruitments"),
         activeColorPrimary: Colors.blue,
@@ -42,7 +50,6 @@ class NextPage extends StatelessWidget {
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
-
       PersistentBottomNavBarItem(
         icon: Icon(Icons.checklist_rtl),
         title: ("Applications"),
@@ -100,8 +107,6 @@ class NextPage extends StatelessWidget {
   }
 }
 
-class CalenderPage {
-}
+class CalenderPage {}
 
-class ActiveRecruitment {
-}
+class ActiveRecruitment {}
