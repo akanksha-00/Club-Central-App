@@ -59,22 +59,23 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Calendar'),
-          centerTitle: true,
-          backgroundColor: Colors.blue[400],
-        ),
-        body: (_isConnected == true)
-            ? SfCalendar(
-                view: CalendarView.week,
-                dataSource: MeetingDataSource(getAppointments(context)),
-              )
-            : Center(
-                child: SpinKitSpinningLines(
-                  color: Colors.blue,
-                  lineWidth: 7,
-                ),
-              ),);
+      appBar: AppBar(
+        title: Text('Calendar'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[400],
+      ),
+      body: (_isConnected == true)
+          ? SfCalendar(
+              view: CalendarView.week,
+              dataSource: MeetingDataSource(getAppointments(context)),
+            )
+          : Center(
+              child: SpinKitSpinningLines(
+                color: Colors.blue,
+                lineWidth: 7,
+              ),
+            ),
+    );
   }
 }
 

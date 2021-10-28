@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 
 import '../models/institute.dart';
 import '../models/user.dart';
+import 'package:club_central/application_status/application_data.dart';
+
 // * Class to maintain all Mongo Atlas Database options
 
 class DatabaseAuthRepository {
@@ -15,7 +17,9 @@ class DatabaseAuthRepository {
       id: ObjectId(), name: ""); //* Present Institute of the logged in user
   late Db
       database; //* Variable to store the database from MongoCloud instead of accessing it everytime
-  List<Map<String, dynamic>> evt = [];
+  List<Map<String, dynamic>> evt =
+      []; // Variable to store the events of a given calendar
+  List<ApplicationData> student_application = [];
   bool isClubAdmin = false;
   User loggedinUser = User(
       id: ObjectId(),
@@ -25,7 +29,8 @@ class DatabaseAuthRepository {
       institute: Institute(id: ObjectId(), name: ""));
   ClubUser clubuser = ClubUser(id: ObjectId(), name: "");
 
-  Map<dynamic, String> clubnamemap={};
+  Map<dynamic, String> clubnamemap = {};
+  Map<dynamic, String> signamemap = {};
 
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
@@ -56,6 +61,20 @@ class DatabaseAuthRepository {
         temp['name'] = e['name'];
         evt.add(temp);
       }
+    }
+  }
+
+  Future<void> fetchApplication() async {
+    final applicationCollection = database.collection("applications");
+    final all_applications = await applicationCollection.find().toList();
+    for (var a in all_applications) {
+      Map<String, dynamic> status_data = a['status'];
+      ApplicationData temp = ApplicationData(
+          roundNo: status_data['round_no'],
+          status: status_data['status'],
+          clubName: clubnamemap[a['club_id']].toString(),
+          sigName: signamemap[a['sig_id']].toString());
+      student_application.add(temp);
     }
   }
 
@@ -117,7 +136,14 @@ class DatabaseAuthRepository {
             }
           }
         }
-         print(clubnamemap);
+        var sigscoll = database.collection("sigs");
+        var sigrecord = await sigscoll.find().toList();
+        for (var record in sigrecord) {
+          signamemap[record['_id']] = record['name'];
+        }
+
+        print(clubnamemap);
+        print(signamemap);
 
         return true;
       } else {
