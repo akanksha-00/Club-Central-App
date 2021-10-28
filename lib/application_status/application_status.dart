@@ -78,12 +78,12 @@ class _ApplicationStatusPageState extends State<ApplicationStatusPage> {
                             all_application[index].clubName,
                           ),
                           Text(
-                            " - " + all_application[index].sigName,
+                            all_application[index].sigName,
                           ),
                           Container(
                             child: MaterialButton(
                               onPressed: () {},
-                              color: Colors.red[400],
+                              color: Colors.blue[100],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -91,7 +91,7 @@ class _ApplicationStatusPageState extends State<ApplicationStatusPage> {
                                 "Round " +
                                     all_application[index].roundNo.toString(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
