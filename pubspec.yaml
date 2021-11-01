@@ -46,6 +46,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   concentric_transition: ^1.0.1
   image_picker: ^0.8.4+1
+  logger: ^1.1.0
 
 
 

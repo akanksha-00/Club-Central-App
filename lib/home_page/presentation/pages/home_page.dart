@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     var width = MediaQuery.of(context).size.width;
     var database =
-        RepositoryProvider.of<DatabaseAuthRepository>(context).database;
+        RepositoryProvider.of<DatabaseAuthRepository>(context);
     Institute intitute =
         RepositoryProvider.of<DatabaseAuthRepository>(context).presentInstitute;
 
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => PostsBloc(
-                  postsRepository: PostsRepository(database: database)),
+                  postsRepository: PostsRepository(database: database.database)),
               child: PostsHomePage(
                 institute: intitute,
               ),
@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget {
                     builder: (context) => BlocProvider(
                           create: (context) => RecruitmentsBloc(
                               recruitmentRepository:
-                                  RecruitmentRepository(database: database)),
+                                  RecruitmentRepository(database: database.database, username: database.loggedinUser.username)),
                           child: RecruitmentsPortalPage(
                             institute: intitute,
                           ),

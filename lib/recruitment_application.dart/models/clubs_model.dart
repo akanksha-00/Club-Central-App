@@ -1,12 +1,13 @@
+import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class ClubsModel {
   final ObjectId id;
   final String username;
-  final List<ObjectId> sigs;
+  final List<SigsModel> sigs;
   final String name;
-  final String isTechnical;
-  final String isRecruiting;
+  final bool isTechnical;
+  final bool isRecruiting;
 
   ClubsModel(
       {required this.id,

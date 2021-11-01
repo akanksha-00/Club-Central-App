@@ -1,4 +1,5 @@
 import 'package:club_central/recruitment_application.dart/models/clubs_model.dart';
+import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
 
 abstract class RecruitmentsState {}
 
@@ -11,5 +12,9 @@ class LoadedState extends RecruitmentsState {
 
   LoadedState({required this.clubs});
 }
+
+class AddingApplicationState extends RecruitmentsState {}
+
+class AddedApplicationState extends RecruitmentsState {}
 
 class ErrorState extends RecruitmentsState {}

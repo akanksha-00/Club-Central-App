@@ -4,11 +4,16 @@ class SigsModel {
   final ObjectId id;
   final ObjectId clubId;
   final String name;
-  final List<int> rounds;
+  final clubName;
+  final List<Object> rounds;
+  bool isApplied;
 
-  SigsModel(
-      {required this.id,
-      required this.clubId,
-      required this.name,
-      required this.rounds});
+  SigsModel({
+    required this.id,
+    required this.clubId,
+    required this.name,
+    required this.clubName,
+    required this.rounds,
+    required this.isApplied,
+  });
 }
