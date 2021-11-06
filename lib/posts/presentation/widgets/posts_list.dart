@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class PostsList extends StatelessWidget {
   final List<PostModel> posts;
+  final int length;
 
-  const PostsList({required this.posts});
+  const PostsList({required this.posts,required this.length});
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -14,7 +15,7 @@ class PostsList extends StatelessWidget {
         child: ListView(
       children: [
         ...[
-          for (int i = 0; i < posts.length; i++) PostsCard(post: posts[i]),
+          for (int i = 0; i < length; i++) PostsCard(post: posts[i]),
         ],
         SizedBox(
           height: 12.0,

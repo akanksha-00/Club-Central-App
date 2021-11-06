@@ -37,10 +37,5 @@ class PostsRepository {
     print("custom posts");
     return postsList;
   }
-
-  // void addComment(CommentsModel comment, ObjectId postId) {
-  //   String rawComment = comment.convertToRawComment();
-  //   database.collection('posts').find()
-  // }
   
 }

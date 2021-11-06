@@ -12,7 +12,6 @@ class PostsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.blue[100],
         appBar: AppBar(
           title: Text(
             "Post",
@@ -36,7 +35,7 @@ class PostsPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: size.height * 0.45),
                 width: size.width,
                 decoration: BoxDecoration(
-                  color: Colors.blue[100],
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
@@ -54,8 +53,9 @@ class PostsPage extends StatelessWidget {
                         height: 16,
                       ),
                       Divider(
-                        height: 8.0,
-                        color: Colors.grey,
+                        height: 5.0,
+                        thickness: 1.0,
+                        color: Colors.black,
                       ),
                       SizedBox(
                         height: 16,
