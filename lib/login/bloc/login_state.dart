@@ -5,11 +5,13 @@ class LoginState {
   final String password;
   final FormSubmissionState presentstatus;
   LoginState(
-      {required this.username, required this.password, required this.presentstatus});
+      {required this.username,
+      required this.password,
+      required this.presentstatus});
   //! Validating the username and password
-  //TODO: Discuss 
-  bool get isValidUsername => username.length > 3;
-  bool get isValidPassword => password.length > 6;
+  //TODO: Discuss
+  bool get isValidUsername => username.length >= 3;
+  bool get isValidPassword => password.length >= 6;
   LoginState copyWith(
       {String? username, String? password, FormSubmissionState? state}) {
     return LoginState(
