@@ -8,6 +8,7 @@ import 'package:club_central/posts/presentation/widgets/posts_list.dart';
 import 'package:club_central/posts/repository/posts_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PostsHomePage extends StatelessWidget {
   final Institute institute;
@@ -23,9 +24,15 @@ class PostsHomePage extends StatelessWidget {
           postsBloc.add(GetPostsEvent(instituteId: institute.id));
         }
         if (state is LoadingState) {
-          return CircularProgressIndicator();
+          return SpinKitSpinningLines(
+            color: Colors.blue,
+            lineWidth: 7,
+          );
         } else if (state is LoadedState) {
-          return PostsList(posts: state.posts);
+          return PostsList(
+            posts: state.posts,
+            length: 3,
+          );
         } else if (state is EmptyState) {
           return NoPosts();
         } else if (state is ErrorState) {
