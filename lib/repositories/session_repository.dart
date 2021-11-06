@@ -25,6 +25,8 @@ class DatabaseAuthRepository {
       institute: Institute(id: ObjectId(), name: ""));
   ClubUser clubuser = ClubUser(id: ObjectId(), name: "");
 
+  Map<dynamic, String> clubnamemap={};
+
   //! FUNCTION  TO CONNECT TO THE DATABASE
   Future<void> connect() async {
     print("Callled");
@@ -87,7 +89,7 @@ class DatabaseAuthRepository {
           name: institutes[correctrecord['instituteName']] as String);
 
       print("Ins id ${presentInstitute.id}");
-      // TODO:Instead of finding in user table, find in club table
+
       if (correctrecord['isAdmin'] == false) {
         loggedinUser = User(
             id: correctrecord['_id'],
@@ -102,6 +104,21 @@ class DatabaseAuthRepository {
         });
         print(userrecord!['name']);
         loggedinUser.name = userrecord['name'];
+        var clubcoll = database.collection("globalschema");
+        var institute_clubs = await clubcoll.find(
+            {"isAdmin": true, "instituteName": presentInstitute.id}).toList();
+        clubcoll = database.collection("club");
+        var clubrecord = await clubcoll.find().toList();
+        for (var clubuser in institute_clubs) {
+          for (var record in clubrecord) {
+            if (clubuser['username'] == record['username']) {
+              print(clubuser['username']);
+              clubnamemap[record['_id']] = record['name'];
+            }
+          }
+        }
+         print(clubnamemap);
+
         return true;
       } else {
         final usercoll = database.collection("club");

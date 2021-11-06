@@ -1,6 +1,7 @@
 import 'package:club_central/login/login_screen.dart';
 import 'package:club_central/login/nextpage.dart';
 import 'package:club_central/models/user.dart';
+import 'package:club_central/myprofile/screens/preferences/my_preferences_screen.dart';
 import 'package:club_central/repositories/session_repository.dart';
 
 import 'package:flutter/material.dart';
@@ -20,13 +21,26 @@ class MyProfilePage extends StatefulWidget {
 class _MyProfilePageState extends State<MyProfilePage> {
   List<List> _options = [
     [
+      'My Club Preference',
+      'View and Update Exclusive Club Preference Order',
+      Icons.list_alt,
+      Colors.red,
+      EditProfileRequest()
+    ],
+    [
       'Change Password',
       'Change Your Password',
       Icons.visibility_sharp,
       Colors.green[400],
       ChangePasswordRequest()
     ],
-    ['Logout', 'Logout', Icons.exit_to_app, Colors.black, LogoutRequest()],
+    [
+      'Logout',
+      'Click here to Logout',
+      Icons.exit_to_app,
+      Colors.black,
+      LogoutRequest(),
+    ],
   ];
 
   @override
@@ -44,9 +58,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
           backgroundColor: Color(0xff2196f3),
           title: Text(
             'My Profile',
-            style: TextStyle(color: Colors.black),
+            
           ),
-          leading: BackButton(color: Colors.black),
+          
         ),
         body: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {
@@ -62,6 +76,15 @@ class _MyProfilePageState extends State<MyProfilePage> {
               );
             } else if (buttonclick is LogoutButtonClick) {
               HotRestartController.performHotRestart(context);
+            } else if (buttonclick is EditProfileClick) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                      value: BlocProvider.of<ProfileBloc>(context),
+                      child: MyPreferencesScreen()),
+                ),
+              );
             }
           },
           child: SingleChildScrollView(

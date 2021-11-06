@@ -23,7 +23,9 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+
         title: Text('Home'),
+
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
@@ -61,6 +63,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
+
               ),
             ),
             SizedBox(
@@ -120,6 +123,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
+
             ),
           ],
         ),
