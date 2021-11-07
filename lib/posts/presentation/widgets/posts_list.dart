@@ -1,13 +1,15 @@
 import 'package:club_central/posts/models/post_model.dart';
+import 'package:club_central/posts/presentation/bloc/posts_bloc.dart';
 import 'package:club_central/posts/presentation/pages/view_posts_page.dart';
 import 'package:club_central/posts/presentation/widgets/posts_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostsList extends StatelessWidget {
   final List<PostModel> posts;
   final int length;
 
-  const PostsList({required this.posts,required this.length});
+  const PostsList({required this.posts, required this.length});
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -29,8 +31,11 @@ class PostsList extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ViewPosts(
-                      posts: posts,
+                    builder: (newcontext1) => BlocProvider(
+                      create: (newcontext2) => context.read<PostsBloc>(),
+                      child: ViewPosts(
+                        posts: posts,
+                      ),
                     ),
                   ),
                 );

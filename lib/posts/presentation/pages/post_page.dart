@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:club_central/posts/presentation/bloc/posts_bloc.dart';
 import 'package:club_central/posts/presentation/pages/comments_page.dart';
 import 'package:club_central/posts/models/post_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostsPage extends StatelessWidget {
   final PostModel post;
+
   const PostsPage({Key? key, required this.post}) : super(key: key);
 
   @override
@@ -76,7 +79,13 @@ class PostsPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Comments(comments: post.comments),
+                                builder: (newcontext1) => BlocProvider(
+                                  create: (newcontext2) =>
+                                      context.read<PostsBloc>(),
+                                  child: Comments(
+                                    postId: post.id,
+                                  ),
+                                ),
                               ),
                             );
                           },

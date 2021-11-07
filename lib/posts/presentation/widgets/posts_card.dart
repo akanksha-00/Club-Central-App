@@ -1,6 +1,8 @@
 import 'package:club_central/posts/models/post_model.dart';
+import 'package:club_central/posts/presentation/bloc/posts_bloc.dart';
 import 'package:club_central/posts/presentation/pages/post_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostsCard extends StatelessWidget {
   final PostModel post;
@@ -35,7 +37,10 @@ class PostsCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PostsPage(post: post),
+                        builder: (newcontext1) => BlocProvider(
+                          create: (newcontext2) => context.read<PostsBloc>(),
+                          child: PostsPage(post: post),
+                        ),
                       ),
                     );
                   },

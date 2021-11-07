@@ -14,21 +14,43 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
     if (event is GetPostsEvent) {
       print("Loading");
       yield LoadingState();
-      print("loaded");
       try {
-        List<PostModel>? posts =
-            await postsRepository.getPosts(event.instituteId);
-        if (posts == null) {
+        await postsRepository.getPosts();
+        print("loaded");
+        if (postsRepository.postsList.isEmpty) {
           yield EmptyState();
         } else {
-          yield LoadedState(posts: posts);
+          yield LoadedState(posts: postsRepository.postsList);
         }
-      } on Exception catch (e) {
+      } catch (e) {
         print(e.toString());
         yield ErrorState();
       }
     } else if (event is AddComment) {
       print("Adding comment");
+      yield LoadingState();
+      try {
+        await postsRepository.addComment(
+            event.postId, event.commentText, event.userName);
+        print("loaded");
+        print('got posts');
+        yield LoadedState(posts: postsRepository.postsList);
+      } catch (e) {
+        print(e.toString());
+        yield ErrorState();
+      }
+    } else if (event is DeleteComment) {
+      print('deleting comment');
+      yield LoadingState();
+      print('loading');
+      try {
+        await postsRepository.deleteComment(event.postId, event.index);
+        print('loaded');
+        yield LoadedState(posts: postsRepository.postsList);
+      } catch (e) {
+        print(e.toString());
+        yield ErrorState();
+      }
     }
   }
 }
