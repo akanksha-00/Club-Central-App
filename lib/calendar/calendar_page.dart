@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../repositories/session_repository.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/services.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -43,28 +44,38 @@ class _CalendarPageState extends State<CalendarPage> {
         _isConnected = true;
       });
     }();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Calendar'),
-          centerTitle: true,
-          backgroundColor: Colors.blue[400],
-        ),
-        body: (_isConnected == true)
-            ? SfCalendar(
-                view: CalendarView.week,
-                dataSource: MeetingDataSource(getAppointments(context)),
-              )
-            : Center(
-                child: SpinKitSpinningLines(
-                  color: Colors.blue,
-                  lineWidth: 7,
-                ),
-              ));
+      appBar: AppBar(
+        title: Text('Calendar'),
+        centerTitle: true,
+        backgroundColor: Colors.blue[400],
+      ),
+      body: (_isConnected == true)
+          ? SfCalendar(
+              view: CalendarView.week,
+              dataSource: MeetingDataSource(getAppointments(context)),
+            )
+          : Center(
+              child: SpinKitSpinningLines(
+                color: Colors.blue,
+                lineWidth: 7,
+              ),
+            ),
+    );
   }
 }
 

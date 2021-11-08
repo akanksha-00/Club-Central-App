@@ -8,11 +8,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'calendar/calendar_page.dart';
-
+import 'package:flutter/services.dart';
 import 'restart_controller.dart';
 
 void main() {
-  runApp(new HotRestartController(child: MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new HotRestartController(child: MyApp()));
+  });
 }
 
 class MyApp extends StatelessWidget {
