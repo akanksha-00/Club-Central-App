@@ -1,5 +1,5 @@
-
 import 'package:bloc/bloc.dart';
+import 'package:club_central/posts/models/post_model.dart';
 import 'package:club_central/posts/presentation/bloc/posts_events.dart';
 import 'package:club_central/posts/presentation/bloc/posts_states.dart';
 import 'package:club_central/posts/repository/posts_repository.dart';
@@ -11,7 +11,6 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
 
   @override
   Stream<PostsState> mapEventToState(PostsEvents event) async* {
-    print(event.runtimeType);
     if (event is GetPostsEvent) {
       print("Loading");
       yield LoadingState();
@@ -31,9 +30,8 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
       print("Adding comment");
       yield LoadingState();
       try {
-        bool r = await postsRepository.addComment(
+        await postsRepository.addComment(
             event.postId, event.commentText, event.userName);
-        print(r);
         print("loaded");
         print('got posts');
         yield LoadedState(posts: postsRepository.postsList);
@@ -42,7 +40,7 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
         yield ErrorState();
       }
     } else if (event is DeleteComment) {
-      print('Deleting comment');
+      print('deleting comment');
       yield LoadingState();
       print('loading');
       try {
@@ -53,8 +51,6 @@ class PostsBloc extends Bloc<PostsEvents, PostsState> {
         print(e.toString());
         yield ErrorState();
       }
-    } else
-      yield ErrorState();
+    }
   }
-
 }

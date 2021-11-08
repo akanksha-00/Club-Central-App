@@ -3,7 +3,6 @@ import 'package:club_central/recruitment_application/presentation/bloc/recruitme
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_state.dart';
 import 'package:club_central/recruitment_application/repository/recruitment_repository.dart';
 
-
 class RecruitmentsBloc extends Bloc<RecruitmentsEvent, RecruitmentsState> {
   final RecruitmentRepository recruitmentRepository;
   RecruitmentsBloc({required this.recruitmentRepository})

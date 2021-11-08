@@ -46,7 +46,7 @@ class PostsRepository {
     return;
   }
 
-  Future<bool> addComment(
+  Future<void> addComment(
       ObjectId postId, String commentText, String userName) async {
     var coll = database.collection("posts");
 
@@ -65,7 +65,6 @@ class PostsRepository {
 
     await coll.updateOne(
         where.eq('_id', postId), modify.set('Comments', rawComments));
-    return true;
   }
 
   Future<void> deleteComment(ObjectId postId, int index) async {

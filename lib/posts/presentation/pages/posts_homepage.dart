@@ -8,10 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class PostsHomePage extends StatelessWidget {
+class PostsHomePage extends StatefulWidget {
   final Institute institute;
   const PostsHomePage({required this.institute});
 
+  @override
+  _PostsHomePageState createState() => _PostsHomePageState();
+}
+
+class _PostsHomePageState extends State<PostsHomePage> {
   @override
   Widget build(BuildContext context) {
     PostsBloc postsBloc = BlocProvider.of<PostsBloc>(context);
@@ -19,7 +24,7 @@ class PostsHomePage extends StatelessWidget {
     return BlocBuilder<PostsBloc, PostsState>(
       builder: (context, state) {
         if (state is InitialState) {
-          postsBloc.add(GetPostsEvent(instituteId: institute.id));
+          postsBloc.add(GetPostsEvent(instituteId: widget.institute.id));
         }
         if (state is LoadingState) {
           return SpinKitSpinningLines(
@@ -27,8 +32,8 @@ class PostsHomePage extends StatelessWidget {
             lineWidth: 7,
           );
         } else if (state is LoadedState) {
-          return BlocProvider(
-            create: (newcontext) => context.read<PostsBloc>(),
+          return BlocProvider.value(
+            value: postsBloc,
             child: PostsList(
               posts: state.posts,
               length: 3,

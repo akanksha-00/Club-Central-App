@@ -1,14 +1,8 @@
-import 'package:club_central/add_a_post/addpost_screen.dart';
 import 'package:club_central/add_a_post/bloc/addpost_bloc.dart';
 import 'package:club_central/application_status/application_status.dart';
 import 'package:club_central/calendar/calendar_page.dart';
-import 'package:club_central/dummmy/active_recr.dart';
 
-import 'package:club_central/dummmy/calender.dart';
 import 'package:club_central/home_page/presentation/pages/home_page.dart';
-import 'package:club_central/login/login_screen.dart';
-import 'package:club_central/login/nextpage.dart';
-import 'package:club_central/my_posts/mypost_screen.dart';
 import 'package:club_central/myprofile/myprofile_screen.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
 import 'package:club_central/recruitment_application/presentation/pages/recruitment_portal.dart';

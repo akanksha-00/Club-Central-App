@@ -14,6 +14,7 @@ class PostsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    PostsBloc postsBloc = BlocProvider.of<PostsBloc>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -79,9 +80,8 @@ class PostsPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (newcontext1) => BlocProvider(
-                                  create: (newcontext2) =>
-                                      context.read<PostsBloc>(),
+                                builder: (newcontext1) => BlocProvider.value(
+                                  value: postsBloc,
                                   child: Comments(
                                     postId: post.id,
                                   ),

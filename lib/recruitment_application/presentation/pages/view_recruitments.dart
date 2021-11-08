@@ -1,4 +1,3 @@
-
 import 'package:club_central/recruitment_application/models/clubs_model.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
 import 'package:club_central/recruitment_application/presentation/widget/clubs_recruitment_card.dart';
@@ -28,8 +27,8 @@ class ViewAllRecruitments extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
         child: ListView.builder(
           itemBuilder: (context, index) {
-            return BlocProvider(
-              create: (context) => recruitmentsBloc,
+            return BlocProvider.value(
+              value: recruitmentsBloc,
               child: RecruitmentsCard(club: clubs[index]),
             );
           },

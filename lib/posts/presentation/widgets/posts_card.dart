@@ -11,6 +11,7 @@ class PostsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PostsBloc postsBloc = BlocProvider.of<PostsBloc>(context);
     return Card(
       elevation: 3.0,
       shape: RoundedRectangleBorder(
@@ -37,8 +38,8 @@ class PostsCard extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (newcontext1) => BlocProvider(
-                          create: (newcontext2) => context.read<PostsBloc>(),
+                        builder: (newcontext1) => BlocProvider.value(
+                          value: postsBloc,
                           child: PostsPage(post: post),
                         ),
                       ),

@@ -23,8 +23,8 @@ class ViewPosts extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 20.0),
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return BlocProvider(
-                create: (newcontext) => context.read<PostsBloc>(),
+              return BlocProvider.value(
+                value: BlocProvider.of<PostsBloc>(context),
                 child: PostsCard(post: posts[index]),
               );
             },

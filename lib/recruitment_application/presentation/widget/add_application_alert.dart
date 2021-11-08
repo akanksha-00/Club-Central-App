@@ -1,4 +1,3 @@
-
 import 'package:club_central/recruitment_application/models/sigs_model.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_event.dart';

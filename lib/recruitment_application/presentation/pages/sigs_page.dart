@@ -23,9 +23,7 @@ class SigsPage extends StatelessWidget {
         body: BlocBuilder<RecruitmentsBloc, RecruitmentsState>(
           builder: (context, state) {
             print('updating sigs list');
-            List<SigsModel> sigs = recruitmentsBloc.recruitmentRepository.clubs
-                .firstWhere((club) => club.id == clubId)
-                .sigs;
+            List<SigsModel> sigs = recruitmentsBloc.recruitmentRepository.clubs.firstWhere((club) => club.id == clubId ).sigs;
             return ListView.builder(
               itemBuilder: (context, index) {
                 print(
