@@ -26,8 +26,8 @@ class RecruitmentsCard extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (buttoncontext) => BlocProvider(
-                        create: (newcontext) => recruitmentsBloc,
+                  builder: (buttoncontext) => BlocProvider.value(
+                        value: recruitmentsBloc,
                         child: SigsPage(
                           clubId: club.id,
                         ),

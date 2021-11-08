@@ -13,11 +13,16 @@ class PostsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    PostsBloc postsBloc = BlocProvider.of<PostsBloc>(context);
     return Expanded(
         child: ListView(
       children: [
         ...[
-          for (int i = 0; i < length; i++) PostsCard(post: posts[i]),
+          for (int i = 0; i < length; i++)
+            BlocProvider.value(
+              value: postsBloc,
+              child: PostsCard(post: posts[i]),
+            ),
         ],
         SizedBox(
           height: 12.0,
@@ -31,8 +36,8 @@ class PostsList extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (newcontext1) => BlocProvider(
-                      create: (newcontext2) => context.read<PostsBloc>(),
+                    builder: (newcontext1) => BlocProvider.value(
+                      value: postsBloc,
                       child: ViewPosts(
                         posts: posts,
                       ),

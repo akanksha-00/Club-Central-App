@@ -2,10 +2,9 @@
 import 'package:club_central/recruitment_application/models/sigs_model.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
 import 'package:club_central/recruitment_application/presentation/bloc/recruitments_state.dart';
+import 'package:club_central/recruitment_application/presentation/widget/add_application_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'add_application_alert.dart';
 
 class SigsCard extends StatelessWidget {
   final SigsModel sig;
@@ -39,8 +38,8 @@ class SigsCard extends StatelessWidget {
                               is AddedApplicationState) {
                             return Container();
                           }
-                          return BlocProvider(
-                            create: (context) => recruitmentsBloc,
+                          return BlocProvider.value(
+                            value: recruitmentsBloc,
                             child: AddApplicationAlert(sig: sig),
                           );
                         });

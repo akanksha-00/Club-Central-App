@@ -8,11 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class RecruitmentsPortalPage extends StatelessWidget {
+class RecruitmentsPortalPage extends StatefulWidget {
   final Institute institute;
   const RecruitmentsPortalPage({Key? key, required this.institute})
       : super(key: key);
 
+  @override
+  _RecruitmentsPortalPageState createState() => _RecruitmentsPortalPageState();
+}
+
+class _RecruitmentsPortalPageState extends State<RecruitmentsPortalPage> {
   @override
   Widget build(BuildContext context) {
     RecruitmentsBloc recruitmentsBloc =
@@ -26,7 +31,7 @@ class RecruitmentsPortalPage extends StatelessWidget {
         builder: (context, state) {
           if (state is InitialState) {
             recruitmentsBloc
-                .add(GetRecruitmentsEvent(instituteId: institute.id));
+                .add(GetRecruitmentsEvent(instituteId: widget.institute.id));
           } else if (state is LoadingState) {
             print('loading in widget');
             return SpinKitSpinningLines(
@@ -34,8 +39,11 @@ class RecruitmentsPortalPage extends StatelessWidget {
               lineWidth: 7,
             );
           } else if (state is LoadedState) {
-            return ViewAllRecruitments(
-              clubs: state.clubs,
+            return BlocProvider.value(
+              value: recruitmentsBloc,
+              child: ViewAllRecruitments(
+                clubs: state.clubs,
+              ),
             );
           } else if (state is ErrorState) {
             return Center(
