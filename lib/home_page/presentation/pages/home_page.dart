@@ -96,39 +96,45 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30.0,
             ),
-            MaterialButton(
-              minWidth: width,
-              color: Colors.blue[900],
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                          create: (context) => RecruitmentsBloc(
-                              recruitmentRepository: RecruitmentRepository(
-                                  database: database.database,
-                                  username: database.loggedinUser.username)),
-                          child: RecruitmentsPortalPage(
-                            institute: intitute,
-                          ),
-                        )));
-              },
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-                child: Text(
-                  "Visit Recruitments Portal",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17.0,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
+
+
+// MaterialButton(
+//               minWidth: width,
+//               color: Colors.blue[900],
+//               shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(15.0),
+//               ),
+//               onPressed: () {
+//                 Navigator.of(context).push(MaterialPageRoute(
+//                     builder: (context) => BlocProvider(
+//                           create: (context) => RecruitmentsBloc(
+//                               recruitmentRepository: RecruitmentRepository(
+//                                   database: database.database,
+//                                   username: database.loggedinUser.username)),
+//                           child: RecruitmentsPortalPage(
+//                             institute: intitute,
+//                           ),
+//                         )));
+//               },
+//               child: Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+//                 child: Text(
+//                   "Visit Recruitments Portal",
+//                   style: TextStyle(
+//                     color: Colors.white,
+//                     fontSize: 17.0,
+//                   ),
+//                 ),
+//               ),
+//             ),
