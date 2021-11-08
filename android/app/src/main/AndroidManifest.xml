@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.club_central">
+    package="com.nitkcs.club_central">
    <application
         android:label="club_central"
         android:icon="@mipmap/ic_launcher">
