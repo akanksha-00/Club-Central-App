@@ -10,20 +10,41 @@ import 'package:club_central/login/login_screen.dart';
 import 'package:club_central/login/nextpage.dart';
 import 'package:club_central/my_posts/mypost_screen.dart';
 import 'package:club_central/myprofile/myprofile_screen.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
+import 'package:club_central/recruitment_application/presentation/pages/recruitment_portal.dart';
+import 'package:club_central/recruitment_application/repository/recruitment_repository.dart';
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-class NextPage extends StatelessWidget {
+class NextPage extends StatefulWidget {
   static final routeName = "/club-admin-screen";
+
+  @override
+  _NextPageState createState() => _NextPageState();
+}
+
+class _NextPageState extends State<NextPage> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
-  // TODO: Add posts screen
+
   List<Widget> _buildScreens() {
     return [
       HomePage(),
-      ActiveRecruitmentPage(),
+      BlocProvider(
+        create: (context) => RecruitmentsBloc(
+            recruitmentRepository: RecruitmentRepository(
+          database:
+              RepositoryProvider.of<DatabaseAuthRepository>(context).database,
+          username: RepositoryProvider.of<DatabaseAuthRepository>(context)
+              .loggedinUser
+              .username,
+        )),
+        child: RecruitmentsPortalPage(
+            institute: RepositoryProvider.of<DatabaseAuthRepository>(context)
+                .presentInstitute),
+      ),
       CalendarPage(),
       ApplicationStatusPage(),
       MyProfilePage(),
