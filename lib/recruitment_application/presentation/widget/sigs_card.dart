@@ -1,10 +1,11 @@
-import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_bloc.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_event.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_state.dart';
-import 'package:club_central/recruitment_application.dart/presentation/widget/add_application_alert.dart';
+
+import 'package:club_central/recruitment_application/models/sigs_model.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'add_application_alert.dart';
 
 class SigsCard extends StatelessWidget {
   final SigsModel sig;

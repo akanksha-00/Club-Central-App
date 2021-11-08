@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:club_central/recruitment_application.dart/models/clubs_model.dart';
-import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_event.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_state.dart';
-import 'package:club_central/recruitment_application.dart/repository/recruitment_repository.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_event.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_state.dart';
+import 'package:club_central/recruitment_application/repository/recruitment_repository.dart';
+
 
 class RecruitmentsBloc extends Bloc<RecruitmentsEvent, RecruitmentsState> {
   final RecruitmentRepository recruitmentRepository;

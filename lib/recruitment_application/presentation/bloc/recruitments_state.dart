@@ -1,5 +1,4 @@
-import 'package:club_central/recruitment_application.dart/models/clubs_model.dart';
-import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
+import 'package:club_central/recruitment_application/models/clubs_model.dart';
 
 abstract class RecruitmentsState {}
 

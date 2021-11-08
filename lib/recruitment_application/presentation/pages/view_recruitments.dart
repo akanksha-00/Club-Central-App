@@ -1,6 +1,7 @@
-import 'package:club_central/recruitment_application.dart/models/clubs_model.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_bloc.dart';
-import 'package:club_central/recruitment_application.dart/presentation/widget/clubs_recruitment_card.dart';
+
+import 'package:club_central/recruitment_application/models/clubs_model.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
+import 'package:club_central/recruitment_application/presentation/widget/clubs_recruitment_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

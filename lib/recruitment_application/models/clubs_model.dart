@@ -1,4 +1,4 @@
-import 'package:club_central/recruitment_application.dart/models/sigs_model.dart';
+import 'package:club_central/recruitment_application/models/sigs_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class ClubsModel {

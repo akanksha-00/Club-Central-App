@@ -2,9 +2,10 @@ import 'package:club_central/models/institute.dart';
 import 'package:club_central/posts/presentation/bloc/posts_bloc.dart';
 import 'package:club_central/posts/presentation/pages/posts_homepage.dart';
 import 'package:club_central/posts/repository/posts_repository.dart';
-import 'package:club_central/recruitment_application.dart/presentation/bloc/recruitments_bloc.dart';
-import 'package:club_central/recruitment_application.dart/presentation/pages/recruitment_portal.dart';
-import 'package:club_central/recruitment_application.dart/repository/recruitment_repository.dart';
+import 'package:club_central/recruitment_application/presentation/bloc/recruitments_bloc.dart';
+import 'package:club_central/recruitment_application/presentation/pages/recruitment_portal.dart';
+import 'package:club_central/recruitment_application/repository/recruitment_repository.dart';
+
 import 'package:club_central/repositories/session_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,16 +17,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = MediaQuery.of(context).size.width;
-    var database =
-        RepositoryProvider.of<DatabaseAuthRepository>(context);
+    var database = RepositoryProvider.of<DatabaseAuthRepository>(context);
     Institute intitute =
         RepositoryProvider.of<DatabaseAuthRepository>(context).presentInstitute;
 
     return Scaffold(
       appBar: AppBar(
-
         title: Text('Home'),
-
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
@@ -63,7 +61,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
             ),
             SizedBox(
@@ -87,7 +84,11 @@ class HomePage extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => PostsBloc(
-                  postsRepository: PostsRepository(database: database.database)),
+                  postsRepository: PostsRepository(
+                database: database.database,
+                instituteId: intitute.id,
+                userName: database.loggedinUser.username,
+              )),
               child: PostsHomePage(
                 institute: intitute,
               ),
@@ -105,8 +106,9 @@ class HomePage extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => BlocProvider(
                           create: (context) => RecruitmentsBloc(
-                              recruitmentRepository:
-                                  RecruitmentRepository(database: database.database, username: database.loggedinUser.username)),
+                              recruitmentRepository: RecruitmentRepository(
+                                  database: database.database,
+                                  username: database.loggedinUser.username)),
                           child: RecruitmentsPortalPage(
                             institute: intitute,
                           ),
@@ -123,7 +125,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-
             ),
           ],
         ),
