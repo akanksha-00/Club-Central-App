@@ -3,7 +3,7 @@ import 'package:club_central/login/nextpage.dart';
 import 'package:club_central/models/user.dart';
 import 'package:club_central/myprofile/screens/preferences/my_preferences_screen.dart';
 import 'package:club_central/repositories/session_repository.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,9 +58,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
           backgroundColor: Color(0xff2196f3),
           title: Text(
             'My Profile',
-            
           ),
-          
         ),
         body: BlocListener<ProfileBloc, ProfileState>(
           listener: (context, state) {
@@ -117,10 +115,15 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                state.user.institute.name,
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              SizedBox(
+                                height:40,
+                                width:210,
+                                child: AutoSizeText(
+                                  state.user.institute.name,
+                                  style:
+                                      TextStyle(color: Colors.grey, fontSize: 14),
+                                      maxLines:3
+                                ),
                               ),
                             ],
                           );

@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:887687512015:android:a27b44aa8452fa5278dcba",
+        "mobilesdk_app_id": "1:887687512015:android:8bebfd146bdcb85478dcba",
         "android_client_info": {
-          "package_name": "com.example.club_central"
+          "package_name": "com.nitkcs.club_central"
         }
       },
       "oauth_client": [
