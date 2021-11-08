@@ -20,8 +20,10 @@ class Comments extends StatelessWidget {
   Widget build(BuildContext context) {
     PostsBloc postsBloc = BlocProvider.of<PostsBloc>(context);
     String userName = postsBloc.postsRepository.userName;
+
     return BlocBuilder<PostsBloc, PostsState>(
       builder: (context, state) {
+        print('building');
         if (state is LoadingState) {
           return SpinKitSpinningLines(
             color: Colors.blue,
@@ -105,11 +107,13 @@ class Comments extends StatelessWidget {
                           MaterialButton(
                             onPressed: () {
                               print('adding comment');
-                              postsBloc.add(AddComment(
-                                  userName: userName,
-                                  commentText: commentText,
-                                  postId: postId));
-                              Navigator.pop(context);
+                              print(commentText);
+                              postsBloc.add(FetchComments());
+                              print(postsBloc.runtimeType);
+                              print(
+                                  'hashcode: ' + postsBloc.hashCode.toString());
+                              print('comment added');
+                              Navigator.of(context).pop();
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
