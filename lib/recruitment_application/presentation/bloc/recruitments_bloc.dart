@@ -10,7 +10,7 @@ class RecruitmentsBloc extends Bloc<RecruitmentsEvent, RecruitmentsState> {
   @override
   Stream<RecruitmentsState> mapEventToState(RecruitmentsEvent event) async* {
     if (event is GetRecruitmentsEvent) {
-      print('loading');
+      print('loading getrecruitments');
       yield LoadingState();
       print('loaded');
       try {

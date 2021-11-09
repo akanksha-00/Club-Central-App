@@ -1,4 +1,3 @@
-
 import 'package:club_central/recruitment_application/models/clubs_model.dart';
 import 'package:club_central/recruitment_application/models/sigs_model.dart';
 import 'package:logger/logger.dart';
@@ -14,19 +13,32 @@ class RecruitmentRepository {
 
   Future<void> getRecruitingClubs(ObjectId instituteId) async {
     var globalSchema = database.collection("globalschema");
-    var superAdmin = await globalSchema
-        .findOne({'instituteName': instituteId, 'isSuperAdmin': true});
+    var clubAdmins = await globalSchema
+        .find({'instituteName': instituteId, 'isAdmin': true}).toList();
 
-    if (superAdmin != null) print(superAdmin['username']);
+    print(instituteId.toString());
 
     var clubsColl = database.collection("club");
     var sigsColl = database.collection('sigs');
     var applicationsColl = database.collection('applications');
 
-    var rawRecClubs = await clubsColl.find(
-        {'username': superAdmin!['username'], 'isRecruiting': true}).toList();
+    List<dynamic> rawRecClubs = [];
+
+    print(clubAdmins.length);
+    for (var clubAdmin in clubAdmins) {
+      print(clubAdmin['username']);
+
+      var rawClub = await clubsColl
+          .findOne({'username': clubAdmin['username'], 'isRecruiting': true});
+
+      print('club name is : ' + rawClub!['name']);
+      rawRecClubs.add(rawClub);
+    }
+
+    print(rawRecClubs.length);
 
     rawRecClubs.forEach((club) {
+      //print(club['name']);
       List<ObjectId> sigsIdList = List<ObjectId>.from(club['SIGS']);
       List<SigsModel> sigs = [];
 
@@ -71,6 +83,7 @@ class RecruitmentRepository {
     ObjectId sigId,
   ) async {
     var applicationsColl = database.collection('applications');
+
     int check = (await applicationsColl.find({
               'username': username,
               'sig_id': sigId,
@@ -79,6 +92,7 @@ class RecruitmentRepository {
             1
         ? 1
         : 0;
+
     if (check == 0) {
       var application = {
         '_id': new ObjectId(),
@@ -88,6 +102,9 @@ class RecruitmentRepository {
         'status': {'round_no': 1, 'status': 1}
       };
       await database.collection('applications').insert(application);
+
+      
+
       int indexClub = clubs.indexWhere((club) => club.id == clubId);
       if (indexClub >= 0) {
         int indexSig =
