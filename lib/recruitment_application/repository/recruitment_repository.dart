@@ -83,6 +83,7 @@ class RecruitmentRepository {
     ObjectId sigId,
   ) async {
     var applicationsColl = database.collection('applications');
+    var userCollection = database.collection('user');
 
     int check = (await applicationsColl.find({
               'username': username,
@@ -103,7 +104,10 @@ class RecruitmentRepository {
       };
       await database.collection('applications').insert(application);
 
-      
+      var user = await userCollection.findOne({'username': username});
+
+      var rawprefernces = user!['preferences'];
+      List<String> userPrefernce = List<String>.from(rawprefernces);
 
       int indexClub = clubs.indexWhere((club) => club.id == clubId);
       if (indexClub >= 0) {
@@ -112,6 +116,12 @@ class RecruitmentRepository {
         if (indexSig >= 0) {
           clubs[indexClub].sigs[indexSig].isApplied = true;
         }
+        if (userPrefernce.indexWhere((preference) => preference == clubs[indexClub].name) <0) 
+        {
+          userPrefernce.add(clubs[indexClub].name);
+        }
+        await database.collection('user').updateOne(
+            {'username': username}, modify.set('preferences', userPrefernce));
       }
       print("apply to sigs");
       clubs[indexClub].sigs.forEach((sig) {
